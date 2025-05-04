@@ -1,0 +1,28 @@
+{
+    "DESCRIPTION": {
+      "subway_id": "노선 ID",
+      "subway_name": "노선명"
+    },
+    "DATA": [
+      { "subway_id": "1001", "subway_name": "1호선" },
+      { "subway_id": "1002", "subway_name": "2호선" },
+      { "subway_id": "1003", "subway_name": "3호선" },
+      { "subway_id": "1004", "subway_name": "4호선" },
+      { "subway_id": "1005", "subway_name": "5호선" },
+      { "subway_id": "1006", "subway_name": "6호선" },
+      { "subway_id": "1007", "subway_name": "7호선" },
+      { "subway_id": "1008", "subway_name": "8호선" },
+      { "subway_id": "1009", "subway_name": "9호선" },
+      { "subway_id": "1061", "subway_name": "중앙선" },
+      { "subway_id": "1063", "subway_name": "경의중앙선" },
+      { "subway_id": "1065", "subway_name": "공항철도" },
+      { "subway_id": "1067", "subway_name": "경춘선" },
+      { "subway_id": "1075", "subway_name": "수인분당선" },
+      { "subway_id": "1077", "subway_name": "신분당선" },
+      { "subway_id": "1081", "subway_name": "경강선" },
+      { "subway_id": "1092", "subway_name": "우이신설선" },
+      { "subway_id": "1093", "subway_name": "서해선" },
+      { "subway_id": "1032", "subway_name": "GTX-A" }
+    ]
+  }
+  
