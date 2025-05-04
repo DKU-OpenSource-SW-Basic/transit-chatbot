@@ -7,11 +7,12 @@
 - json
 ##  📁 파일 구조
 ``` 
-├── traffic.py # BusInfo, SubwayInfo 클래스 정의 
-├── main.py # 실행 예제 
-├── Json/ # json 파일 디렉토리 
-│ ├── busRouteId.json # 버스 노선 데이터 
-│ └── subwayId.json # 지하철 노선 데이터 └── README.md 
+├── traffic.py              # BusInfo, SubwayInfo 클래스 정의 
+├── main.py                 # 실행 예제 
+├── Json/                   # json 파일 디렉토리 
+│ ├── busRouteId.json       # 버스 노선 데이터 
+│ └── subwayId.json         # 지하철 노선 데이터 
+└── README.md 
 ``` 
             
 ## 📦 클래스 및 메소드 설명
