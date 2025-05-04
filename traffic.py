@@ -26,6 +26,7 @@ class BusInfo:
     bus_stop_name= None
     root = None
     bus_dict = []
+    service_key = "service_key"
 
 
     def __init__(self,bus_stop_name:str,bus_num:str):
@@ -54,7 +55,7 @@ class BusInfo:
                 self.route_id = None
     def getAPI(self,value_tag:str):
         url = 'http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll'
-        params ={'serviceKey' : '1sq/rwVIQUlj/pGMERuN6nx+n6RE4Ioxf5ymfzg2LZgyne97Ex0Bmm4xBJ8jPFPHfFBhAOuXc///yNimFMb0jg==', 'busRouteId' : self.route_id }
+        params ={'serviceKey' : self.service_key, 'busRouteId' : self.route_id }
         response = requests.get(url, params=params)
         self.root = ET.fromstring(response.content)
         stNm_dict = []
@@ -71,7 +72,7 @@ class BusInfo:
             self.getAPI("stNm",value_tag)
         return self.bus_dict
 class SubwayInfo:
-    service_key = "5a506c476b73696d39376845756c6a"
+    service_key = "service_key"
     
     data = None
     station_name = None

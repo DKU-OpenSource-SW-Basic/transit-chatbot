@@ -5,11 +5,18 @@
 - urllib.parse
 - xml.etree.ElementTree as ET
 - json
-## 파일 구조
-<pre><code>## 📁 파일 구조 ``` ├── traffic.py # BusInfo, SubwayInfo 클래스 정의 ├── main.py # 실행 예제 ├── Json/ # json 파일 디렉토리 │ ├── busRouteId.json # 버스 노선 데이터 │ └── subwayId.json # 지하철 노선 데이터 └── README.md ``` </code></pre>               
+##  📁 파일 구조
+``` 
+├── traffic.py # BusInfo, SubwayInfo 클래스 정의 
+├── main.py # 실행 예제 
+├── Json/ # json 파일 디렉토리 
+│ ├── busRouteId.json # 버스 노선 데이터 
+│ └── subwayId.json # 지하철 노선 데이터 └── README.md 
+``` 
+            
 ## 📦 클래스 및 메소드 설명
 
-### Class : ToolKit
+### 🧩 Class : ToolKit
 
 **기능**: 유틸리티 함수 모음 클래스 (출력, JSON 파일 읽기)
 
@@ -26,12 +33,12 @@
 - **Returns** : list
 
 
-### Class : BusInfo
+### 🧩 Class : BusInfo
 **기능**: 'BusInfo' 클래스는 버스 번호("bus_num")과 정류장 이름('bus_stop_name')을 기반으로 서울시 버스 실시간 정보를 조회 합니다.
 
 #### 🛠 생성자
 ```python
-BusInfo(bus_stop_name:str,bus_num:str)
+BusInfo(버스정류장이름,버스번호호)
 ```
 
 
@@ -61,7 +68,7 @@ BusInfo(bus_stop_name:str,bus_num:str)
 
 -**Returns** : Array
 
-### Class : SubwayInfo
+### 🧩 Class : SubwayInfo
 
 #### 생성자
 ```python
@@ -84,7 +91,9 @@ subway =SubwayInfo(역이름,호선명,상행여부)
 
 **지하철 API**: https://data.seoul.go.kr/dataList/OA-12601/A/1/datasetView.do;jsessionid=D01BCC4A262086FBB94C62C74D1A81DA.new_portal-svr-21
 
-
+## 미구현 기능들
+- ❌ 즐겨찾기 
+- ❌ 지하철 혼잡도
 
 
 
