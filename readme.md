@@ -14,6 +14,7 @@
 │ └── subwayId.json         # 지하철 노선 데이터 
 └── README.md 
 ``` 
+
             
 ## 📦 클래스 및 메소드 설명
 
@@ -33,59 +34,59 @@
     - filepath (str) : JSON 파일 경로
 - **Returns** : list
 
+### 🧩 Class : TransportInfo
+**BusInfo 와 SubwayInfo의 부모 클래스이다.** 
 
-### 🧩 Class : BusInfo
-**기능**: 'BusInfo' 클래스는 버스 번호("bus_num")과 정류장 이름('bus_stop_name')을 기반으로 서울시 버스 실시간 정보를 조회 합니다.
-
-#### 🛠 생성자
+#### 🔸 `updateInfo(station_name,transport_num,direction)`
 ```python
-BusInfo(버스정류장이름,버스번호호)
+transport = TransportInfo()
+transport.updateInfo(name,num,"상행")
+```
+**기능** : 역이름,대중교통의 번호,상행/하행 인지를 입력받는다.
+
+첫 객체 생성후 반드시 사용해야하며 후에 바꾸고 싶을떄 다시 입력하여 값을 바꿀수있다다
+
+#### 🔸 `checkInputException()`
+**기능** : updateInfo로 받은 값들이 조건에 맞는지 확인한다
+
+#### 🔸 `convertTransportNameToId()`
+**기능** : 대중교통의 이름(ex:1호선,753) 을 ID값으로 변환후 transport_id 에 저장한다
+
+#### 🔸 `getArrivalInfo()`
+**기능** : 대중교통이 언제 도착하는지 정보를 반환한다. 세부내용은 자식클래스에서 개발한다.
+```python
+print(transport.getArrivalInfo())
 ```
 
+### 🧩 Class : BusInfo
+ 
 
-#### 🔸 `getRouteIdByBusNumber()-> None`
-**기능** : JSON에서 해당버스 번호(`bus_number`)에 해당하는 `route_id` 값을 찾아서 필드 변수에 저장합니다.
+#### 🛠 생성자
+**기능** busID에 관한 json파일을 읽어 값을 dict로 저장한다.
+```python
+bus = BusInfo()
+```
 
--**Returns**: `None`
-
-#### 🔸 `getAPI(value_tag)->list`
-
-**기능**: 서울특별시 버스도착정보조회 서비스 `getArroyInfoByRouteAllList` OpenAPI를 호출하여 매개변수에 작성한 태그에 맞는 값과 정류장 이름을 `bus_dict`에 저장하고 `bus_dict`값을 반환한다.
-
-##### Parameters
-- **value_tag** : 알고 싶은 tag값 
-*tag*
-- arsId : 정류장 번호
-- busRouteId : 노선ID
-- exps1 : 첫번쨰 도착 버스의 지수평활 도착예정 시간
-- exps2 : 첫번쨰 도착 버스의 지수평활 도착예정 시간
-- rtNm : 노선명
-
--**Returns** : list
-
-#### 🔸 `findMatchingItemArray()`
-
-**기능**: `bus_dict`에서 `bus_stop_name`이 같은 것의 `value`값을 배열 형식으로 반환한다.
-
--**Returns** : Array
+#### 🔸 `getArrivalInfo()`
+**기능** 버스가 언제 도착할지를 반환한다.
+- 내부에 출력할값을 arrmsg1과arrmsg2로 설정해두었는데 이는 첫번쨰와두번쨰 도착할 버스의 도착정보를 받기 위함이고 다른걸 받으려면 아래있는 사이트에 있는 파라미터를 골라서 바꾸면 된다.
+- 또한 정보를 받아올떄 노선 전체를 받아오기에 종점방향으로 향하는 상행버스와 하행버스를 구별할수있게 두개를 전부 구하고 하나만 취하는것으로 만들었다. 
 
 ### 🧩 Class : SubwayInfo
 
 #### 🛠 생성자
+**기능** subwayID에 관한 json파일을 읽어 값을 dict로 저장한다
 ```python
-subway =SubwayInfo(역이름,호선명,상행여부)
+subway =SubwayInfo()
 ```
-#### 🔸 `getAPI()`
 
-**기능**  : 생성자에서 받은 `staion_name`으로 서울시 지하철 실시간 열차 위치정보 API를 요청하여 얻은 값을 data에 저장한다.
+#### 🔸 `getArrivalInfo()`
+**기능** 지하철이 언제 도착할지를 반환한다.
+- 만약 대답이 error로 오게 된다면 errorMessage가 출력된다.
+- 도착정보를 받기위해 arvlMsg2로 설정했는데 다른 정보를 출력하고싶다면 아래있는 사이트에서 파라미터를 골라서 바꾸면 된다.
 
--**Returns** : None
-
-#### 🔸 `findMatchingItemArray()`
-
-**기능**  : `data`에서 `subwayId` 와 상행여부가 필드값과 같은지 확인하고 같으면 이떄 도착 예정시간을 배열에 추가한후에 이를 반환한다.
-
--**Returns** : Array
+#### 🔸 `isSameDirection(dirct1,dirct2)`
+**기능** 지하철의 경우 내선과 외선이 있기에 dirct1이 상행일떄 dirct2가 상행이거나 내선이어도 참을 반환하고 dirct1이 하행일떄 dirct2가 하행이거나 외선일떄 참을 반환한다.
 
 ## 참고
 **버스 API** :https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15000314
@@ -95,10 +96,4 @@ subway =SubwayInfo(역이름,호선명,상행여부)
 ## 미구현 기능들
 - ❌ 즐겨찾기 
 - ❌ 지하철 혼잡도
-
-
-
-
-
-
-
+- 

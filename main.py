@@ -1,9 +1,14 @@
-import traffic
+import traffic 
+from traffic import ToolKit
 
-bus = traffic.BusInfo("역촌초등학교","753") 
-traffic.ToolKit.enhancedPrintList(bus.getAPI("exps1"))
-print(bus.findMatchingItemArray())
+# bus = traffic.BusInfo("역촌초등학교","753") 
+# bus.getAPI("exps1")
 
-subway = traffic.SubwayInfo("서울","1호선","상행")
-subway.getAPI()
-print(subway.findMatchingItemArray())
+bus = traffic.BusInfo()
+bus.updateInfo("역촌초등학교","753","하행")
+print(bus.getArrivalInfo())
+
+
+sub = traffic.SubwayInfo()
+sub.updateInfo("강남",'2호선','상행')
+print(sub.getArrivalInfo())
