@@ -46,11 +46,17 @@ transport.updateInfo(name,num,"상행")
 
 첫 객체 생성후 반드시 사용해야하며 후에 바꾸고 싶을떄 다시 입력하여 값을 바꿀수있다다
 
+**Returns** : None
+
 #### 🔸 `checkInputException()`
 **기능** : updateInfo로 받은 값들이 조건에 맞는지 확인한다
 
+**Returns** : 어떤 변수가 문제인지
+
 #### 🔸 `convertTransportNameToId()`
 **기능** : 대중교통의 이름(ex:1호선,753) 을 ID값으로 변환후 transport_id 에 저장한다
+
+**Returns** : None
 
 #### 🔸 `getArrivalInfo()`
 **기능** : 대중교통이 언제 도착하는지 정보를 반환한다. 세부내용은 자식클래스에서 개발한다.
@@ -72,6 +78,8 @@ bus = BusInfo()
 - 내부에 출력할값을 arrmsg1과arrmsg2로 설정해두었는데 이는 첫번쨰와두번쨰 도착할 버스의 도착정보를 받기 위함이고 다른걸 받으려면 아래있는 사이트에 있는 파라미터를 골라서 바꾸면 된다.
 - 또한 정보를 받아올떄 노선 전체를 받아오기에 종점방향으로 향하는 상행버스와 하행버스를 구별할수있게 두개를 전부 구하고 하나만 취하는것으로 만들었다. 
 
+**Returns** : (첫버스정보,두번쨰 버스정보)
+
 ### 🧩 Class : SubwayInfo
 
 #### 🛠 생성자
@@ -85,8 +93,12 @@ subway =SubwayInfo()
 - 만약 대답이 error로 오게 된다면 errorMessage가 출력된다.
 - 도착정보를 받기위해 arvlMsg2로 설정했는데 다른 정보를 출력하고싶다면 아래있는 사이트에서 파라미터를 골라서 바꾸면 된다.
 
+**Returns** : 지하철도착정보
+
 #### 🔸 `isSameDirection(dirct1,dirct2)`
 **기능** 지하철의 경우 내선과 외선이 있기에 dirct1이 상행일떄 dirct2가 상행이거나 내선이어도 참을 반환하고 dirct1이 하행일떄 dirct2가 하행이거나 외선일떄 참을 반환한다.
+
+**Returns** : Boolean
 
 ## 참고
 **버스 API** :https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15000314
