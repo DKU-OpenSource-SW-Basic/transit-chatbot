@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>대중교통 챗봇</title>
+  <link rel="stylesheet" href="{% static 'chatbot/chatbot.css' %}" />
+</head>
+<body>
+  <div class="header-bg">
+    <div class="header-content">
+      <button id="toggle-sidebar">
+        <span class="icon">★</span> 즐겨찾기
+      </button>
+      <div id="user-name">
+        대중교통정보 챗봇 <span class="icon">🤖</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-wrapper">
+    <div class="sidebar-container" id="sidebar">
+      <ul id="favorites-list">
+        <button id="add-list">+</button>
+        <!-- 즐겨찾기 목록은 JS에서 동적으로 로드 -->
+      </ul>
+    </div>
+
+    <div class="chatbot-container" id="chatbot">
+      <div class="chat-display" id="chat-display"></div>
+      <div class="chat-input">
+        <input type="text" id="user-input" />
+        <button onclick="sendMessage()"> ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 즐겨찾기 추가 -->
+  <div id="add-favorite-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>즐겨찾기 추가</h2>
+        <span class="close">&times;</span>
+      </div>
+      <form id="favorite-form">
+        <div class="form-group">
+          <label for="favorite-name">즐겨찾기 이름</label>
+          <input type="text" id="favorite-name" placeholder="예: 학교가는 버스" required />
+        </div>
+        <div class="form-group">
+          <label for="favorite-content">내용</label>
+          <textarea
+            id="favorite-content"
+            placeholder="예: 강남역에 1101버스 언제와?"
+            required
+          ></textarea>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="btn btn-secondary" id="cancel-btn">취소</button>
+          <button type="submit" class="btn btn-primary">저장</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="{% static 'chatbot/chatbot.js' %}"></script>
+</body>
+</html>

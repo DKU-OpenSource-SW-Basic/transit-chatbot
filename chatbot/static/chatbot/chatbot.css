@@ -1,0 +1,332 @@
+body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #ffeded;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .chat-wrapper {
+      position: absolute;
+      z-index: 1;
+      display: flex;
+      width: 1130px;
+      height: 600px;
+      transition: all 0.3s ease;
+      left: 50%;
+      top: 50%;
+      transform: translate(-43%, -45%);
+    }
+
+    .chatbot-container {
+      flex: 1;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      margin-left: 0;
+      background-color: #dedede;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .chat-display {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column-reverse;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .chat-input {
+      display: flex;
+      border: none;
+    }
+
+    .chat-input input {
+      flex: 1;
+      font-size: 15px;
+      padding: 20px 15px;
+      border: 1px solid #ffffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 20px;
+    }
+
+    .chat-input button {
+      background: #ff7a7a;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      width: 70px;
+      margin-left: 10px;
+      padding: 10px 16px 10px 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-size: 18px;
+    }
+
+    .sidebar-container {
+      width: 0;
+      background: #dedede;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      padding: 20px 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      opacity: 0;
+    }
+
+    .sidebar-container.active {
+      width: 220px;
+      margin-right: 20px;
+      padding: 20px;
+      opacity: 1;
+    }
+
+    #favorites-list {
+      padding: 0;
+    }
+
+    #favorites-list li {
+      list-style: none;
+      background-color: #fff;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 20px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #favorites-list li:hover {
+      background-color: #f0f0f0;
+    }
+
+    .delete-btn {
+      background: #ff4444;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-48%, -53%);
+      width: 1150px;
+      height: 650px;
+      background: #ff7a7a;
+      border-radius: 40px;
+      z-index: 0;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 30px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #toggle-sidebar {
+      background-color: rgba(255, 255, 255, 0.441);
+      border: none;
+      border-radius: 15px;
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    #toggle-sidebar:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    #add-list {
+      background: #ff7a7a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 15px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      width: 100%;
+      transition: background-color 0.2s;
+    }
+
+    #add-list:hover {
+      background: #ff6666;
+    }
+
+    #user-name {
+      background-color: #ffffff;
+      color: black;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 0px 30px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .icon {
+      font-size: 16px;
+    }
+
+    /* 모달 스타일 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 30px;
+      border-radius: 15px;
+      width: 400px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      color: #333;
+    }
+
+    .close {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .form-group textarea {
+      height: 80px;
+      resize: vertical;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-primary {
+      background: #ff7a7a;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #ff6666;
+    }
+
+    .btn-secondary {
+      background: #ccc;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #bbb;
+    }
+
+    /* 메시지 버블 스타일 개선 */
+    .message {
+      max-width: 70%;
+      padding: 12px 16px;
+      margin: 8px;
+      border-radius: 18px;
+      word-wrap: break-word;
+      line-height: 1.4;
+    }
+
+    .user-message {
+      align-self: flex-end;
+      background: #ff7a7a;
+      color: white;
+    }
+
+    .bot-message {
+      align-self: flex-start;
+      background: #f1f1f1;
+      color: #333;
+    }
+
+    .error-message {
+      align-self: flex-start;
+      background: #ffebee;
+      color: #c62828;
+      border-left: 4px solid #e57373;
+    }
