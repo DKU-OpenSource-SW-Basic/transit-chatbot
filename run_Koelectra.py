@@ -79,16 +79,22 @@ def predict(sentence, tokenizer, slot_model, intent_model, label_list, intent_li
             score = slot_scores[idx]
             word_to_tag[word_id] = (label_list[pred_id], score)
 
-    #print("너무 길어져서 슬롯 생략")
-    #return
-
     print(f"🔸 슬롯 태깅:")
     for i, word in enumerate(words):
         if i in word_to_tag:
             tag, score = word_to_tag[i]
-            clean_word = remove_particle(word) if tag in extracted else word
+    
+            # 먼저 조사 제거
+            clean_word = remove_particle(word)
+    
+            # 그 다음 B-ROUTE만 접미사 제거
+            if tag == "B-ROUTE":
+                clean_word = re.sub(r'(번|호|번차|버스)$', '', clean_word)
+    
+            # 슬롯에 저장
             if tag in extracted:
                 extracted[tag].append(clean_word)
+    
             print(f"   {word:10} → {tag:20} (score: {score:.4f})")
         else:
             print(f"   {word:10} → [NO TAG]")
@@ -125,7 +131,8 @@ def predict(sentence, tokenizer, slot_model, intent_model, label_list, intent_li
         print(f"\n⚠️ 필요한 정보가 부족합니다: {', '.join(missing)} 이(가) 누락되었습니다.\n")
 
 
-# 아래 코드만 수정하여 사용하면 된다.
+# 입력과 출력의 경우, 아래 코드만 수정하여 사용하면 된다.
+# 위는 모델을 사용하기 위해 정해둔 코드, 아래는 직접 실행하는 코드이다.
 
 # ✅ 사용자 입력 반복
 print("🟢 문장을 입력하세요. 'exit', 'quit', 'q' 입력 시 종료됩니다.\n")
