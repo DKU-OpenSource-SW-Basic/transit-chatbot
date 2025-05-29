@@ -5,7 +5,7 @@ from transformers import AutoTokenizer, AutoModelForTokenClassification, AutoMod
 
 # ✅ 조사 제거 함수
 def remove_particle(word):
-    particles = ['에서', '에게', '으로', '로', '에', '을', '를', '은', '는', '이', '가', '와', '과', '밖에', '만', '조차', '까지', '도', '이나', '나']
+    particles = ['에서', '에게', '으로', '로', '에', '을', '를', '은', '는', '이', '가', '와', '과', '밖에', '만', '조차', '까지', '도', '이나', '나', '의']
     for particle in particles:
         if word.endswith(particle):
             return word[:-len(particle)]
