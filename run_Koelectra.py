@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import re
 from transformers import AutoTokenizer, AutoModelForTokenClassification, AutoModelForSequenceClassification
 
-# ✅ 조사 제거 함수
+# 조사 제거 함수
 def remove_particle(word):
     particles = ['에서', '에게', '으로', '로', '에', '을', '를', '은', '는', '이', '가', '와', '과', '밖에', '만', '조차', '까지', '도', '이나', '나', '의']
     for particle in particles:
@@ -11,25 +11,35 @@ def remove_particle(word):
             return word[:-len(particle)]
     return word
 
-# ✅ 모델 경로
+# 슬롯 병합 및 후처리 함수
+def finalize_slot(buffer, slot_tag):
+    if not buffer:
+        return None
+    joined = ''.join(buffer)
+    cleaned = remove_particle(joined)
+    if slot_tag == "B-ROUTE":
+        cleaned = re.sub(r'(번|호|번차|버스)$', '', cleaned)
+    return cleaned
+
+# 모델 경로
 path = "finetuned_model"
 slot_model_path = f"./{path}/slot"
 intent_model_path = f"./{path}/intent"
 tokenizer_path = f"./{path}/tokenizer"
 
-# ✅ 레이블 리스트
+# 레이블 리스트
 label_list = ['B-DIRECTION', 'B-LINE', 'B-ROUTE', 'B-STATION', 'B-TRANSPORT-BUS', 'B-TRANSPORT-SUBWAY', 'O']
 intent_list = ['arrival_bus', 'arrival_subway', 'congestion', 'other']
 
-# ✅ 장치 설정
+# 장치 설정
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# ✅ 토크나이저 및 모델 불러오기
+# 토크나이저 및 모델 불러오기
 tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
 slot_model = AutoModelForTokenClassification.from_pretrained(slot_model_path).to(device).eval()
 intent_model = AutoModelForSequenceClassification.from_pretrained(intent_model_path).to(device).eval()
 
-# ✅ 예측 함수
+# 예측 함수
 def predict(sentence, tokenizer, slot_model, intent_model, label_list, intent_list):
     words = sentence.strip().split()
     tokenized = tokenizer(
@@ -41,8 +51,7 @@ def predict(sentence, tokenizer, slot_model, intent_model, label_list, intent_li
         max_length=128
     )
 
-    for k in tokenized:
-        tokenized[k] = tokenized[k].to(device)
+    inputs = {k: v.to(device) for k, v in tokenized.items()}
 
     with torch.no_grad():
         # 인텐트 예측
@@ -52,7 +61,6 @@ def predict(sentence, tokenizer, slot_model, intent_model, label_list, intent_li
         intent_score = intent_probs[intent_pred_id].item()
         intent_label = intent_list[intent_pred_id]
 
-        # 확신도 낮으면 기타 처리
         if intent_score < 0.8:
             intent_label = "other"
 
@@ -60,87 +68,41 @@ def predict(sentence, tokenizer, slot_model, intent_model, label_list, intent_li
         slot_logits = slot_model(**tokenized).logits
         slot_probs = F.softmax(slot_logits, dim=2)[0]
         slot_preds = torch.argmax(slot_probs, dim=1).tolist()
-        slot_scores = slot_probs[range(len(slot_preds)), slot_preds].tolist()
 
     input_ids = tokenized["input_ids"][0].cpu()
     word_ids = tokenized.word_ids(batch_index=0)
 
-    print(f"\n🟦 문장: {sentence}")
-    print(f"🔸 예측 인텐트: {intent_label}  (score: {intent_score:.4f})")
-
-    # 태깅 결과 정리
-    extracted = {"B-STATION": [], "B-ROUTE": [], "B-LINE": []}
     word_to_tag = {}
     for idx, word_id in enumerate(word_ids):
         if word_id is None or input_ids[idx].item() in tokenizer.all_special_ids:
             continue
         if word_id not in word_to_tag:
             pred_id = slot_preds[idx]
-            score = slot_scores[idx]
-            word_to_tag[word_id] = (label_list[pred_id], score)
+            label = label_list[pred_id]
+            word_to_tag[word_id] = label
 
-    print(f"🔸 슬롯 태깅:")
+    # 병합 기반 슬롯 추출
+    extracted = {"B-STATION": [], "B-ROUTE": [], "B-LINE": []}
+    prev_tag = None
+    buffer = []
+
     for i, word in enumerate(words):
-        if i in word_to_tag:
-            tag, score = word_to_tag[i]
-    
-            # 먼저 조사 제거
-            clean_word = remove_particle(word)
-    
-            # 그 다음 B-ROUTE만 접미사 제거
-            if tag == "B-ROUTE":
-                clean_word = re.sub(r'(번|호|번차|버스)$', '', clean_word)
-    
-            # 슬롯에 저장
-            if tag in extracted:
-                extracted[tag].append(clean_word)
-    
-            print(f"   {word:10} → {tag:20} (score: {score:.4f})")
+        tag = word_to_tag.get(i, "O")
+
+        if tag == prev_tag and tag in extracted:
+            buffer.append(word)
         else:
-            print(f"   {word:10} → [NO TAG]")
-    
-    if intent_label == "other":
-        print("⚠️ 기타 인텐트로 분류되어 출력을 생략합니다.\n")
-        return
+            if prev_tag in extracted and buffer:
+                cleaned = finalize_slot(buffer, prev_tag)
+                if cleaned:
+                    extracted[prev_tag].append(cleaned)
+            buffer = [word] if tag in extracted else []
+            prev_tag = tag
 
-    # 🎯 인텐트에 따른 결과 출력
-    print(f"\n🎯 인텐트별 필요한 정보:")
-    missing = []
+    # 마지막 버퍼 처리
+    if prev_tag in extracted and buffer:
+        cleaned = finalize_slot(buffer, prev_tag)
+        if cleaned:
+            extracted[prev_tag].append(cleaned)
 
-    if intent_label == "arrival_bus":
-        station = ''.join(extracted["B-STATION"])
-        route = ''.join(extracted["B-ROUTE"])
-        print(f"  🚌 정류장(STATION): {station if station else '없음'}")
-        print(f"  🚌 버스번호(ROUTE): {route if route else '없음'}")
-        if not station:
-            missing.append("정류장(STATION)")
-        if not route:
-            missing.append("버스번호(ROUTE)")
-
-    elif intent_label in ["arrival_subway", "congestion"]:
-        station = ''.join(extracted["B-STATION"])
-        line = ''.join(extracted["B-LINE"])
-        print(f"  🚇 지하철역(STATION): {station if station else '없음'}")
-        print(f"  🚇 노선명(LINE): {line if line else '없음'}")
-        if not station:
-            missing.append("지하철역(STATION)")
-        if not line:
-            missing.append("노선명(LINE)")
-
-    if missing:
-        print(f"\n⚠️ 필요한 정보가 부족합니다: {', '.join(missing)} 이(가) 누락되었습니다.\n")
-
-
-# 입력과 출력의 경우, 아래 코드만 수정하여 사용하면 된다.
-# 위는 모델을 사용하기 위해 정해둔 코드, 아래는 직접 실행하는 코드이다.
-
-# ✅ 사용자 입력 반복
-print("🟢 문장을 입력하세요. 'exit', 'quit', 'q' 입력 시 종료됩니다.\n")
-while True:
-    user_input = input("💬 입력 > ").strip()
-    if user_input.lower() in ["exit", "quit", "q"]:
-        print("👋 종료합니다.")
-        break
-    if user_input == "":
-        continue
-    predict(user_input, tokenizer, slot_model, intent_model, label_list, intent_list)
+    return intent_label, extracted
