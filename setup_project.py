@@ -4,11 +4,9 @@ import sys
 import webbrowser
 import time
 
-# 시스템 pip 경로 (가상환경을 사용하지 않는 경우)
+# 1. 시스템 pip 경로 설정 (가상환경을 사용하지 않는 경우)
 pip_path = "pip"
-python_path = sys.executable  # 현재 실행 중인 Python 사용
-
-# 1. (생략됨) 가상환경 생성 함수 제거됨
+python_path = sys.executable  # 현재 실행 중인 Python 사용 
 
 # 2. 패키지 설치
 def install_packages():
