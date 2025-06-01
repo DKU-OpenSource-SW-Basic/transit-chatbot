@@ -1,21 +1,76 @@
-## 📘 프로젝트 소개
-서울시에서 제공하는 버스및 지하철 도착정보를 OpenAI를 활용해서 도착예정 시간을 조회하는 Python 프로그램
-## 사용한 라이브러리
-- requests
-- urllib.parse
-- xml.etree.ElementTree as ET
-- json
+# User Guide
+## 목표 사용자
+- 자신이 기다리는 대중교통이 언제 오는지 알고 싶은 사용자
+## 사용 목적
+- 서울,경기 지역의 지하철과 버스 도착정보를 제공하는것이다.
+- 웹 사이트에서 텍스트 기반 챗봇과 상호작용하여 도착정보를 받아온다.
+## 실제 사용 화면
+
+## 사용 시나리오
+
+#### 버스 도착시간 요청
+- 사이트의 채팅 화면에서 챗봇 실행.
+- 질문에 정류장 이름과 버스 번호를 포함하여 질문한다.
+- 잠시후 챗봇이 질문한 정류장에 도착하는 가장빠른 버스의 도착정보를 알려준다.
+#### 지하철 도착시간 요청
+- 사이트의 채팅 화면에서 챗봇 실행.
+- 질문에 역 이름과 지하철 호선 정보를 포함하여 질문한다.
+- 잠시후 챗봇이 질문한 역에 가장빠른 질문한 지하철의 도착정보를 알려준다.
+
+# Developer Guide
+## 사전준비
+- Python 3.8 이상 필요
+- git
+- 공공 데이터 포털의 APIKey 
+- **사용할 API 신청 필요 https://www.data.go.kr/ 에서 신청**
+## 다운로드 방법
+``` bash
+git clone https://github.com/DKU-OpenSource-SW-Basic/transit-chatbot.git
+```
+``` terminal
+python manage.py runserver
+```
+
 ##  📁 파일 구조
 ``` 
-├── traffic.py              # BusInfo, SubwayInfo 클래스 정의 
-├── main.py                 # 실행 예제 
-├── Json/                   # json 파일 디렉토리 
-│ ├── busRouteId.json       # 버스 노선 데이터 
-│ └── subwayId.json         # 지하철 노선 데이터 
-└── README.md 
+├── Json/                   # 버스,지하철 ID 정보 디렉토리 
+├── chatbot/                # Django 폴더
+├── chatbot_project/        # Django 폴더
+├── traffic.py              # 도착정보 API 정리 클래스 
+├── main.py                 # 도착정보 실행 예제
+├── manage.py               
+├── db.sqlite3              
+├── download_model.py       
+├── run_Koelectra.py        
+└── README.md               # 유저 가이드 + 개발자 가이드
 ``` 
+## 다이어 그램
+```mermaid
+sequenceDiagram
+  participant User as 사용자
+  participant Chatbot as 챗봇
+  participant AI as AI
+  participant SubwayAPI as 지하철API
+  participant BusAPI as 버스API
 
-            
+  User->>Chatbot: 질문
+  Chatbot->>AI: 정규화하라
+  AI-->>Chatbot: 정규화된 값
+
+  alt 정규화값 == "지하철"
+    Chatbot->>SubwayAPI: 도착정보 요청
+    SubwayAPI-->>Chatbot: 지하철 도착정보
+  else 정규화값 == "버스"
+    Chatbot->>BusAPI: 도착정보 요청
+    BusAPI-->>Chatbot: 버스 도착정보
+  else
+    Chatbot-->>User: "잘못된 질문입니다."
+    return
+  end
+
+  Chatbot-->>User: 도착정보
+
+```
 ## 📦 클래스 및 메소드 설명
 
 ### 🧩 Class : ToolKit
@@ -37,12 +92,11 @@
 ### 🧩 Class : TransportInfo
 **BusInfo 와 SubwayInfo의 부모 클래스이다.** 
 
-#### 🔸 `updateInfo(station_name,transport_num,direction)`
+#### 🔸 `updateInfo(station_name,transport_num)`
 ```python
 transport = TransportInfo()
-transport.updateInfo(name,num,"상행")
+transport.updateInfo(name,num)
 ```
-**기능** : 역이름,대중교통의 번호,상행/하행 인지를 입력받는다.
 
 첫 객체 생성후 반드시 사용해야하며 후에 바꾸고 싶을떄 다시 입력하여 값을 바꿀수있다다
 
@@ -75,10 +129,7 @@ bus = BusInfo()
 
 #### 🔸 `getArrivalInfo()`
 **기능** 버스가 언제 도착할지를 반환한다.
-- 내부에 출력할값을 arrmsg1과arrmsg2로 설정해두었는데 이는 첫번쨰와두번쨰 도착할 버스의 도착정보를 받기 위함이고 다른걸 받으려면 아래있는 사이트에 있는 파라미터를 골라서 바꾸면 된다.
-- 또한 정보를 받아올떄 노선 전체를 받아오기에 종점방향으로 향하는 상행버스와 하행버스를 구별할수있게 두개를 전부 구하고 하나만 취하는것으로 만들었다. 
-
-**Returns** : (첫버스정보,두번쨰 버스정보)
+- 내부에 출력할값을 arrmsg1과arrmsg2로 설정해두어서 도착정보를 받아온다.
 
 ### 🧩 Class : SubwayInfo
 
@@ -95,17 +146,20 @@ subway =SubwayInfo()
 
 **Returns** : 지하철도착정보
 
-#### 🔸 `isSameDirection(dirct1,dirct2)`
-**기능** 지하철의 경우 내선과 외선이 있기에 dirct1이 상행일떄 dirct2가 상행이거나 내선이어도 참을 반환하고 dirct1이 하행일떄 dirct2가 하행이거나 외선일떄 참을 반환한다.
+## 수정 가이드
 
-**Returns** : Boolean
+- 다른 정보들을 가져오고 싶을떄
+- BusInfo와 SubwayInfo 의 인자들은 arrmsg 와 arvlMsg 를 다른 인자로 바꾸면 다른 정보를 반환해준다.
+- 예를 들어서 버스 막차시간을 알고 싶을떄는 lastTm 을 입력하면 된다.
+- 자세한 인자들은 아래있는 공식 API사이트에서 문서들을 참고해라.
 
-## 참고
-**버스 API** :https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15000314
 
-**지하철 API**: https://data.seoul.go.kr/dataList/OA-12601/A/1/datasetView.do;jsessionid=D01BCC4A262086FBB94C62C74D1A81DA.new_portal-svr-21
-
-## 미구현 기능들
-- ❌ 즐겨찾기 
-- ❌ 지하철 혼잡도
-- 
+# 사용 API
+- **경기도버스 API** : https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15080346
+- **서울버스 API** :https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15000314
+- **지하철 API**: https://data.seoul.go.kr/dataList/OA-12601/A/1/datasetView.do;jsessionid=D01BCC4A262086FBB94C62C74D1A81DA.new_portal-svr-21
+# 사용한 라이브러리
+- requests
+- urllib.parse
+- xml.etree.ElementTree 
+- json
