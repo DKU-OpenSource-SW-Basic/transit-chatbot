@@ -31,12 +31,16 @@ with open(BUS_ROUTE_ID_JSON, encoding="utf-8") as f:
 bus_stops = pd.read_csv(CAPITAL_STOP_CSV, encoding="utf-8")
 gyeonggi_routes = pd.read_csv(GYEONGGI_ROUTE_CSV, encoding="utf-8")
 
-# CSV 로딩
-bus_stops = pd.read_csv(CAPITAL_STOP_CSV, encoding="utf-8")
-gyeonggi_routes = pd.read_csv(GYEONGGI_ROUTE_CSV, encoding="utf-8")
+# 정류장명 후보 리스트(서울/경기 전체)
+all_stop_names = set(bus_stops['정류소명'].dropna().unique())
 
 def similarity(a: str, b: str) -> float:
     return difflib.SequenceMatcher(None, a.lower(), b.lower()).ratio()
+
+def find_best_stop_name(query: str, candidates: List[str], threshold=0.4) -> str:
+    """전체 정류장 후보 중 가장 유사한 이름 반환 (없으면 입력값 반환)"""
+    matches = difflib.get_close_matches(query, candidates, n=1, cutoff=threshold)
+    return matches[0] if matches else query
 
 def get_top_station_matches(query: str, top_n: int = 5) -> List[Tuple[str, dict, float]]:
     results = []
@@ -101,7 +105,7 @@ def get_seoul_arrival(route_no: str, station_name: str) -> Optional[str]:
         if best_match and best_score > 0.7:
             remain_seat = best_match.findtext("reride_Num1")
             remain_text = "정보 없음" if remain_seat in ["-1", None] else remain_seat
-            return f"[서울] {route_no} 버스: {best_match.findtext('arrmsg1')} / {best_match.findtext('arrmsg2')} / 잔여좌석: {remain_text}"
+            return f"[서울] {route_no} 버스: {best_match.findtext('arrmsg1')} / {best_match.findtext('arrmsg2')} / 이번 버스 잔여좌석: {remain_text}"
 
         return None
     except:
@@ -132,7 +136,7 @@ def get_gyeonggi_arrival_by_route_with_curl(route_no: str, station_name: str) ->
             return []
 
         matching_stations = []
-        min_similarity_threshold = 0.6
+        min_similarity_threshold = 0.4
         for station in station_list:
             current_station_name = station.get("stationName")
             if current_station_name:
@@ -165,7 +169,7 @@ def get_gyeonggi_arrival_by_route_with_curl(route_no: str, station_name: str) ->
                         remain_seat = arrival_item.get('remainSeatCnt1')
                         remain_text = "정보 없음" if remain_seat is None or remain_seat == -1 else str(remain_seat)
                         if predict_time is not None and str(predict_time).isdigit():
-                            gyeonggi_arrival_results.append(f"[경기] {route_no} 버스: {predict_time}분 / 잔여좌석: {remain_text}")
+                            gyeonggi_arrival_results.append(f"[경기] {route_no} 버스: {predict_time}분 / 이번 버스 잔여좌석: {remain_text}")
                 except json.JSONDecodeError:
                     continue
 
@@ -173,23 +177,29 @@ def get_gyeonggi_arrival_by_route_with_curl(route_no: str, station_name: str) ->
     except:
         return []
 
-def construct_output(seoul_results: List[str], gyeonggi_results: List[str]) -> str:
+def construct_output(seoul_results: List[str], gyeonggi_results: List[str], matched_station_name: str, route_no: str, user_input_name: str) -> str:
     seen = set()
     unique = []
     for entry in seoul_results + gyeonggi_results:
         if entry not in seen:
             seen.add(entry)
             unique.append(entry)
-    return "\n".join(unique) if unique else "도착 정보를 찾을 수 없습니다."
+    header = f"[정류장: {matched_station_name}] (입력: {user_input_name}) / 버스번호: {route_no}"
+    if unique:
+        return f"{header}\n" + "\n".join(unique)
+    else:
+        return f"{header}\n도착 정보를 찾을 수 없습니다."
 
 def get_bus_arrival(station_name: str, route_no: str) -> str:
+    # 유사도 기반으로 최적의 정류장명 추출 (서울/경기 전체 DB 대상)
+    matched_station_name = find_best_stop_name(station_name, list(all_stop_names), threshold=0.4)
+
     seoul_results = []
-    seoul_result = get_seoul_arrival(route_no, station_name)
+    seoul_result = get_seoul_arrival(route_no, matched_station_name)
     if seoul_result:
         seoul_results.append(seoul_result)
 
-    gyeonggi_results = get_gyeonggi_arrival_by_route_with_curl(route_no, station_name)
+    gyeonggi_results = get_gyeonggi_arrival_by_route_with_curl(route_no, matched_station_name)
 
-    return construct_output(seoul_results, gyeonggi_results)
-
+    return construct_output(seoul_results, gyeonggi_results, matched_station_name, route_no, station_name)
 
