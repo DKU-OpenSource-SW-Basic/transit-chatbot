@@ -1,7 +1,6 @@
 import os
 import subprocess
 import sys
-import platform
 import webbrowser
 import time
 
@@ -14,7 +13,6 @@ python_path = sys.executable  # 현재 실행 중인 Python 사용
 # 2. 패키지 설치
 def install_packages():
     print("필요한 패키지를 설치합니다...")
-
     packages = ["torch", "transformers", "django", "requests", "pandas"]
 
     for pkg in packages:
@@ -42,8 +40,6 @@ def run_download_model():
 
 # 4. 서버 실행 및 브라우저 열기
 def run_server_and_open_browser():
-    import subprocess, time, webbrowser
-
     print("로컬 Django 서버를 실행합니다...")
     try:
         server_process = subprocess.Popen(
@@ -73,7 +69,6 @@ def run_server_and_open_browser():
 
 # 전체 실행 흐름
 if __name__ == "__main__":
-    # create_virtualenv() 제거됨
     install_packages()
     run_download_model()
     run_server_and_open_browser()
