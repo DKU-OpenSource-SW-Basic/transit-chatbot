@@ -7,8 +7,8 @@ import json
 import os
 
 # API 키
-TAGO_API_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XNmPgYxBuWKLBYdQIkcKOHmobGMlEdDw%3D%3D"
-SEOUL_API_KEY = "5a506c476b73696d39376845756c6a"
+#TAGO_API_KEY = "..."
+#SEOUL_API_KEY = "..."
 
 SEOUL_LINES = {"1호선", "2호선", "3호선", "4호선", "5호선", "6호선", "7호선", "8호선", "9호선", "경의중앙선", "수인분당선", "신분당선", "경춘선", "경강선", "우이신설선", "서해선", "신림선", "공항철도", "GTX-A"}
 
