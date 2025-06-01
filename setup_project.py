@@ -15,7 +15,7 @@ python_path = sys.executable  # 현재 실행 중인 Python 사용
 def install_packages():
     print("필요한 패키지를 설치합니다...")
 
-    packages = ["torch", "transformers", "django"]
+    packages = ["torch", "transformers", "django", "requests", "pandas"]
 
     for pkg in packages:
         print(f"{pkg} 설치 중...")
@@ -42,20 +42,34 @@ def run_download_model():
 
 # 4. 서버 실행 및 브라우저 열기
 def run_server_and_open_browser():
+    import subprocess, time, webbrowser
+
     print("로컬 Django 서버를 실행합니다...")
-
-    server_process = subprocess.Popen([python_path, "manage.py", "runserver"])
-
-    print("브라우저를 엽니다 (http://127.0.0.1:8000/)")
-    time.sleep(3)  # 서버 부팅 시간 잠시 대기
-    webbrowser.open("http://127.0.0.1:8000/")
-
-    # 서버가 죽지 않도록 대기
     try:
-        server_process.wait()
-    except KeyboardInterrupt:
-        print("서버 종료")
-        server_process.terminate()
+        server_process = subprocess.Popen(
+            [python_path, "manage.py", "runserver"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
+
+        print("브라우저를 엽니다 (http://127.0.0.1:8000/)")
+        time.sleep(3)
+        webbrowser.open("http://127.0.0.1:8000/")
+
+        # 서버가 죽지 않도록 대기
+        try:
+            server_process.wait()
+        except KeyboardInterrupt:
+            print("서버 종료 요청됨 (Ctrl+C)")
+            server_process.terminate()
+    except Exception as e:
+        print(f"서버 실행 중 오류 발생: {e}")
+        # (옵션) 만약 서버가 아예 시작 못한 경우, 에러 메시지 표기
+        if 'server_process' in locals():
+            out, err = server_process.communicate(timeout=2)
+            print("---- 서버 출력 ----")
+            print(out.decode(errors="ignore"))
+            print("---- 서버 에러 ----")
+            print(err.decode(errors="ignore"))
 
 # 전체 실행 흐름
 if __name__ == "__main__":
