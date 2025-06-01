@@ -7,10 +7,11 @@ import json
 import os
 
 # API 키
-TAGO_API_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XNmPgYxBuWKLBYdQIkcKOHmobGMlEdDw%3D%3D"
-SEOUL_API_KEY = "5a506c476b73696d39376845756c6a"
+#TAGO_API_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XNmPgYxBuWKLBYdQIkcKOHmobGMlEdDw%3D%3D"
+#SEOUL_API_KEY = "5a506c476b73696d39376845756c6a"
 
 SEOUL_LINES = {"1호선", "2호선", "3호선", "4호선", "5호선", "6호선", "7호선", "8호선", "9호선", "경의중앙선", "수인분당선", "신분당선", "경춘선", "경강선", "우이신설선", "서해선", "신림선", "공항철도", "GTX-A"}
+UNSUPPORTED_LINES = {"인천1호선", "인천2호선", "김포골드라인", "용인경전철", "의정부경전철"}
 
 # Load subway station map once at the start
 with open(os.path.join("Json", "Subway_Station.json"), "r", encoding="utf-8") as f:
@@ -38,6 +39,9 @@ def get_subway_arrival(response_json: dict) -> str:
 
     if not station or not line:
         return "역 이름 또는 호선명이 누락되었습니다."
+    
+    if line in UNSUPPORTED_LINES:
+        return f"[{line}] 노선 정보는 현재 제공되지 않습니다."
 
     # 2. 가장 유사한 역 이름 찾기
     station = find_closest_station_name(station, line)
@@ -134,7 +138,7 @@ def get_subway_arrival(response_json: dict) -> str:
         return "도착 정보 없음"
 
 
-
+# 현재 혼잡도 정보(국토부)는 서비스 종료되었고, 다른 혼잡도 API는 유료이므로 구현코드는 만들되, 사용하지 않습니다. 
 def get_subway_congestion(response_json: dict) -> str:
     station = get_first(response_json["response"].get("B-STATION"))
     line = get_first(response_json["response"].get("B-LINE"))
@@ -147,7 +151,7 @@ def get_subway_congestion(response_json: dict) -> str:
     if not statn_id:
         return f"[{station} - {line}] 에 해당하는 지하철역 정보를 찾을 수 없습니다."
 
-    if line in SEOUL_LINES:
+    if line in SEOUL_LINES or line in UNSUPPORTED_LINES:
         return f"[{station} - {line}] 혼잡도 정보는 현재 제공되지 않는 API입니다. 양해 부탁드립니다."
 
     try:
