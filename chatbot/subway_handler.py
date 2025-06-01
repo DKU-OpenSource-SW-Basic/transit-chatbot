@@ -55,7 +55,8 @@ def get_subway_arrival(response_json: dict) -> str:
             url = (
                 f"http://swopenapi.seoul.go.kr/api/subway/{SEOUL_API_KEY}/json/realtimeStationArrival/0/5/{station}"
             )
-            res = requests.get(url)
+            res = requests.get(url, verify=False)
+
             data = res.json()
             items = data.get("realtimeArrivalList", [])
 
@@ -87,7 +88,10 @@ def get_subway_arrival(response_json: dict) -> str:
                     f"https://apis.data.go.kr/1613000/SubwayInfoService/getSubwayArrivalInfo"
                     f"?serviceKey={TAGO_API_KEY}&statnId={statn_id}&_type=json"
                 )
-                res = requests.get(url)
+                try:
+                    res = requests.get(url, timeout=5, verify=False)  # << SSL 검증 임시 무시!
+                except requests.exceptions.SSLError as ssl_err:
+                    return "국토부 API SSL 인증서 오류: 서버와의 보안 연결에 실패했습니다. 잠시 후 다시 시도해 주세요."
                 data = res.json()
                 items = data["response"]["body"]["items"]["item"]
 
