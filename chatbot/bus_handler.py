@@ -11,8 +11,8 @@ import subprocess
 import shlex
 
 # API KEY
-SEOUL_SERVICE_KEY    = "1sq/rwVIQUlj/pGMERuN6nx+n6RE4Ioxf5ymfzg2LZgyne97Ex0Bmm4xBJ8jPFPHfFBhAOuXc///yNimFMb0jg=="
-GYEONGGI_SERVICE_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XNmPgYxBuWKLBYdQIkcKOHmobGMlEdDw=="
+#SEOUL_SERVICE_KEY    = "..."
+#GYEONGGI_SERVICE_KEY = "..."
 
 # 경로 설정
 BASE_DIR = Path(__file__).resolve().parent.parent
