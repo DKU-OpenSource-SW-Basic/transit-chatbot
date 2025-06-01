@@ -1,19 +1,15 @@
-# subway_handler.py
 import requests
-from typing import Optional
-from .intent_parser import get_first
-from .subway_station_map import get_subway_statn_id, find_closest_station_name, get_exact_statn_id
 import json
 import os
 
 # API 키
-#TAGO_API_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XNmPgYxBuWKLBYdQIkcKOHmobGMlEdDw%3D%3D"
-#SEOUL_API_KEY = "5a506c476b73696d39376845756c6a"
+TAGO_API_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XNmPgYxBuWKLBYdQIkcKOHmobGMlEdDw%3D%3D"
+SEOUL_API_KEY = "5a506c476b73696d39376845756c6a"
 
 SEOUL_LINES = {"1호선", "2호선", "3호선", "4호선", "5호선", "6호선", "7호선", "8호선", "9호선", "경의중앙선", "수인분당선", "신분당선", "경춘선", "경강선", "우이신설선", "서해선", "신림선", "공항철도", "GTX-A"}
 UNSUPPORTED_LINES = {"인천1호선", "인천2호선", "김포골드라인", "용인경전철", "의정부경전철"}
 
-# Load subway station map once at the start
+# Subway station map 생성 (중복 제거)
 with open(os.path.join("Json", "Subway_Station.json"), "r", encoding="utf-8") as f:
     raw_data = json.load(f)
 
@@ -27,6 +23,11 @@ for entry in raw_data:
         SUBWAY_MAP[line] = {}
     SUBWAY_MAP[line][station] = station_id
 
+# 역 이름이 정확히 일치하지 않을 경우 가장 유사한 이름 반환
+def find_closest_station_name(station: str, line: str) -> str:
+    candidates = SUBWAY_MAP.get(line, {}).keys()
+    best_match = difflib.get_close_matches(station, candidates, n=1)
+    return best_match[0] if best_match else station
 
 def get_subway_arrival(response_json: dict) -> str:
 
@@ -140,8 +141,8 @@ def get_subway_arrival(response_json: dict) -> str:
 
 # 현재 혼잡도 정보(국토부)는 서비스 종료되었고, 다른 혼잡도 API는 유료이므로 구현코드는 만들되, 사용하지 않습니다. 
 def get_subway_congestion(response_json: dict) -> str:
-    station = get_first(response_json["response"].get("B-STATION"))
-    line = get_first(response_json["response"].get("B-LINE"))
+    station = (response_json["response"].get("B-STATION") or [None])[0]
+    line = (response_json["response"].get("B-LINE") or [None])[0]
 
     if not station or not line:
         return "역 이름 또는 호선명이 누락되었습니다."
