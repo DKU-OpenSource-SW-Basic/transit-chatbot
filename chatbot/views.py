@@ -9,6 +9,7 @@ import traceback
 
 # 모델 예측 코드
 from run_Koelectra import predict, tokenizer, slot_model, intent_model, label_list, intent_list
+from .dispatcher import dispatch
 
 # 1. 챗봇 메인 페이지 렌더링
 def chatbot_view(request):
@@ -65,32 +66,16 @@ def chat_api(request):
             if not message:
                 return JsonResponse({"error": "입력 문장이 없습니다."}, status=400)
 
-            # 입력 확인
             print("입력 문장:", message)
 
             # 모델 예측 실행
             intent, keywords = predict(message, tokenizer, slot_model, intent_model, label_list, intent_list)
 
-            # 모델 출력 확인
             print("예측된 인텐트:", intent)
             print("추출된 키워드:", keywords)
 
-            # =========================
-            # subway_handler 연동
-            # =========================
-            from .subway_handler import get_subway_arrival, get_subway_congestion
-
-            if intent == "arrival_subway":
-                response_text = get_subway_arrival({
-                    "response": keywords
-                })
-            elif intent == "congestion":
-                response_text = get_subway_congestion({
-                    "response": keywords
-                })
-            else:
-                # 기존 기본 응답 유지
-                response_text = f"[{intent}] {keywords}"
+            # dispatcher를 통해 API 연동
+            response_text = dispatch(intent, keywords)
 
             return JsonResponse({
                 "intent": intent,
@@ -99,9 +84,8 @@ def chat_api(request):
             }, json_dumps_params={"ensure_ascii": False})
 
         except Exception as e:
-            print("예외 발생:", str(e))  # 에러도 출력
+            print("예외 발생:", str(e))
             traceback.print_exc()
             return JsonResponse({"error": str(e)}, status=500)
 
     return HttpResponseNotAllowed(["POST"])
-
