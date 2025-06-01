@@ -60,16 +60,14 @@ sequenceDiagram
   alt 정규화값 == "지하철"
     Chatbot->>SubwayAPI: 도착정보 요청
     SubwayAPI-->>Chatbot: 지하철 도착정보
+    Chatbot-->>User: 도착정보
   else 정규화값 == "버스"
     Chatbot->>BusAPI: 도착정보 요청
     BusAPI-->>Chatbot: 버스 도착정보
-  else
-    Chatbot-->>User: "잘못된 질문입니다."
-    return
+    Chatbot-->>User: 도착정보
+  else 잘못된 질문
+    Chatbot-->>User: 잘못된 질문입니다.
   end
-
-  Chatbot-->>User: 도착정보
-
 ```
 ## 📦 클래스 및 메소드 설명
 
