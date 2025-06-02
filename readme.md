@@ -37,7 +37,13 @@ python setup_project.py
 ``` terminal
 python manage.py runserver
 ```
-
+``` bash
+만약 python manage.py runserver 명령어로 실행했는데 404가 뜬다면,
+where manage.py
+코드를 실행하여 경로를 확인하고, transit-chatbot 폴더가 아닌 경로로 지정되어 있거나 비어있다면
+python manage.py runserver --settings=chatbot_project.settings
+명령어를 입력하시면 해결될 수 있습니다.
+```
 ##  📁 파일 구조
 ``` 
 ├── Json/             # 버스, 지하철 ID 등 정보
