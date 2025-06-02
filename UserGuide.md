@@ -45,7 +45,7 @@ python manage.py runserver --settings=chatbot_project.settings
 - 이전에 만든 것을 눌러서 채팅하지않고 도착정보를 바로 받을수 있다.
 
 ![즐겨찾기 메뉴](images/favorite_menu.png)
-- 이름을 지정하고 원하는 질문을 작성하여 저잘해둘수 있다.
+- 이름을 지정하고 원하는 질문을 작성하여 저장장해둘수 있다.
 
 ![즐겨찾기 등록방법](images/favorite_register.png)
 - 블럭을 누르면 저장해둔 질문에 대한 도착정보를 알려준다.
