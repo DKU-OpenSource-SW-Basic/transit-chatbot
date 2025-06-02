@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import difflib
+from pathlib import Path
 
 # API 키
 TAGO_API_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XNmPgYxBuWKLBYdQIkcKOHmobGMlEdDw%3D%3D"
@@ -11,7 +12,11 @@ SEOUL_LINES = {"1호선", "2호선", "3호선", "4호선", "5호선", "6호선",
 UNSUPPORTED_LINES = {"인천1호선", "인천2호선", "김포골드라인", "용인경전철", "의정부경전철"}
 
 # Subway station map 생성 (중복 제거)
-with open(os.path.join("Json", "Subway_Station.json"), "r", encoding="utf-8") as f:
+BASE_DIR = Path(__file__).resolve().parent.parent  # transit-chatbot/
+JSON_DIR = BASE_DIR / "data" / "Json"
+SUBWAY_STATION_JSON = JSON_DIR / "Subway_Station.json"
+
+with open(SUBWAY_STATION_JSON, "r", encoding="utf-8") as f:
     raw_data = json.load(f)
 
 SUBWAY_MAP = {}

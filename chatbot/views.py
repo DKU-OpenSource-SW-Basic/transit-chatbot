@@ -5,7 +5,11 @@ from django.shortcuts import render
 from .models import Favorite
 import json
 import traceback
+import sys
+import os
 
+
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'scripts'))
 
 # 모델 예측 코드
 from run_Koelectra import predict, tokenizer, slot_model, intent_model, label_list, intent_list

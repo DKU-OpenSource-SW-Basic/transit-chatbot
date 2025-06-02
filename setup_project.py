@@ -20,8 +20,9 @@ def install_packages():
 
 # 3. 모델 다운로드 스크립트 실행 (있는지 검사)
 def run_download_model():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    model_path = os.path.join(script_dir, "finetuned_model")
+    root_dir = os.path.dirname(os.path.abspath(__file__))
+    script_dir = os.path.join(root_dir, "scripts")
+    model_path = os.path.join(root_dir, "finetuned_model")
     
     if os.path.exists(model_path):
         print("'finetuned_model' 폴더가 이미 존재합니다. 다운로드를 생략합니다.")
@@ -33,7 +34,7 @@ def run_download_model():
         subprocess.check_call([python_path, download_model_path])
         print("모델 다운로드 완료")
     else:
-        print("download_model.py 파일이 없습니다. 건너뜁니다.")
+        print("scripts/download_model.py 파일이 없습니다. 건너뜁니다.")
         input("엔터를 누르면 종료됩니다.")
 
 # 4. 서버 실행 및 브라우저 열기

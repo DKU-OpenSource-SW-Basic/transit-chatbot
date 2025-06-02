@@ -16,8 +16,9 @@ GYEONGGI_SERVICE_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XN
 
 # 경로 설정
 BASE_DIR = Path(__file__).resolve().parent.parent
-CSV_DIR  = BASE_DIR / "csv"
-JSON_DIR = BASE_DIR / "Json"
+DATA_DIR = BASE_DIR / "data"
+CSV_DIR  = DATA_DIR / "csv"
+JSON_DIR = DATA_DIR / "Json"
 
 CAPITAL_STOP_CSV     = CSV_DIR / "capital_bus_stops.csv"
 GYEONGGI_ROUTE_CSV   = CSV_DIR / "gyeonggi_bus_route.csv"
