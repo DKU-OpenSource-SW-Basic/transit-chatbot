@@ -232,7 +232,7 @@ def deduplicate_and_limit(seoul_results: List[str], gyeonggi_results: List[str],
 
 def construct_output(seoul_results: List[str], gyeonggi_results: List[str], matched_station_name: str, route_no: str, user_input_name: str) -> str:
     final_results = deduplicate_and_limit(seoul_results, gyeonggi_results, max_total=4)
-    header = f"[정류장: {matched_station_name}] (입력: {user_input_name}) / 버스번호: {route_no}"
+    header = f"(입력: {user_input_name}) / 버스번호: {route_no}" # [정류장: {matched_station_name}] 입력값과 1차 매칭된 값. 혼란줄 것 같아 임의로 주석처리
     if final_results:
         return f"{header}\n" + "\n".join(final_results)
     else:
