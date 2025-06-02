@@ -41,7 +41,7 @@ python manage.py runserver --settings=chatbot_project.settings
 
 ### 🧩 즐겨찾기 사용방법
 - 즐겨 찾기 기본 화면이다.
--  + 를 눌러서 새로운 즐겨찾기를 등록하거나
+-  플러스스 를 눌러서 새로운 즐겨찾기를 등록하거나
 - 이전에 만든 것을 눌러서 채팅하지않고 도착정보를 바로 받을수 있다.
 
 ![즐겨찾기 메뉴](images/favorite_menu.png)
