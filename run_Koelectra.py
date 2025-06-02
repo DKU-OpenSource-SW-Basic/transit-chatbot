@@ -51,11 +51,12 @@ def predict(sentence, tokenizer, slot_model, intent_model, label_list, intent_li
         max_length=128
     )
 
+    # ✅ 입력 텐서도 GPU/CPU 디바이스에 맞춰 이동
     inputs = {k: v.to(device) for k, v in tokenized.items()}
 
     with torch.no_grad():
-        # 인텐트 예측
-        intent_logits = intent_model(**tokenized).logits
+        # ✅ 디바이스 일치 적용
+        intent_logits = intent_model(**inputs).logits
         intent_probs = F.softmax(intent_logits, dim=1)[0]
         intent_pred_id = torch.argmax(intent_probs).item()
         intent_score = intent_probs[intent_pred_id].item()
@@ -64,8 +65,7 @@ def predict(sentence, tokenizer, slot_model, intent_model, label_list, intent_li
         if intent_score < 0.8:
             intent_label = "other"
 
-        # 슬롯 태깅 예측
-        slot_logits = slot_model(**tokenized).logits
+        slot_logits = slot_model(**inputs).logits
         slot_probs = F.softmax(slot_logits, dim=2)[0]
         slot_preds = torch.argmax(slot_probs, dim=1).tolist()
 
