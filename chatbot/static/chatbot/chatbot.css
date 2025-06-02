@@ -46,6 +46,15 @@ body {
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
+    .sidebar-container.active ~ .chatbot-container .chat-display img {
+       width: 700px;
+    }
+
+    .chat-display img {
+      width: 800px;
+      align-self: center;
+    }
+
     .chat-input {
       display: flex;
       border: none;

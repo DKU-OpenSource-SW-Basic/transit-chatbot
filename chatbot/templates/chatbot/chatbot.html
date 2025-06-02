@@ -28,7 +28,9 @@
     </div>
 
     <div class="chatbot-container" id="chatbot">
-      <div class="chat-display" id="chat-display"></div>
+      <div class="chat-display" id="chat-display">
+        <img src="{% static 'chatbot/chatbot_tutorial.png' %}" alt="첫화면">
+      </div>
       <div class="chat-input">
         <input type="text" id="user-input" />
         <button onclick="sendMessage()"> ▶</button>
