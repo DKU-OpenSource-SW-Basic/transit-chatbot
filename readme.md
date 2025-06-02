@@ -1,12 +1,13 @@
-# User Guide
+# 🚀 Guide
 ## 목표 사용자
 - 자신이 기다리는 대중교통이 언제 오는지 알고 싶은 사용자
 ## 사용 목적
 - 서울,경기 지역의 지하철과 버스 도착정보를 제공하는것이다.
 - 웹 사이트에서 텍스트 기반 챗봇과 상호작용하여 도착정보를 받아온다.
-## 실제 사용 화면
 
-## 사용 시나리오
+[유저 가이드 보기](UserGuide.md)
+
+## 📖 사용 시나리오
 
 #### 버스 도착시간 요청
 - 사이트의 채팅 화면에서 챗봇 실행.
@@ -17,33 +18,13 @@
 - 질문에 역 이름과 지하철 호선 정보를 포함하여 질문한다.
 - 잠시후 챗봇이 질문한 역에 가장빠른 질문한 지하철의 도착정보를 알려준다.
 
-# Developer Guide
+# 🚀 Developer Guide
 ## 사전준비
 - Python 3.8 이상 필요
 - git
 - 공공 데이터 포털의 APIKey 
 - **사용할 API 신청 필요 https://www.data.go.kr/ 에서 신청**
-## 다운로드 방법
-``` bash
-# 1. 깃허브에서 프로젝트를 복제(clone)합니다.
-git clone https://github.com/DKU-OpenSource-SW-Basic/transit-chatbot.git
 
-# 2. 생성된 프로젝트 폴더로 이동합니다.
-cd transit-chatbot
-
-# 3. (최초 1회) 모든 환경 준비 및 실행을 자동으로 처리합니다.
-python setup_project.py
-```
-``` terminal
-python manage.py runserver
-```
-``` bash
-만약 python manage.py runserver 명령어로 실행했는데 404가 뜬다면,
-where manage.py
-코드를 실행하여 경로를 확인하고, transit-chatbot 폴더가 아닌 경로로 지정되어 있거나 비어있다면
-python manage.py runserver --settings=chatbot_project.settings
-명령어를 입력하시면 해결될 수 있습니다.
-```
 ##  📁 파일 구조
 ``` 
 ├── Json/             # 버스, 지하철 ID 등 정보
@@ -61,7 +42,7 @@ python manage.py runserver --settings=chatbot_project.settings
 ├── README.md         # 유저 가이드 + 개발자 가이드
 └── finetuned_model/  # <실행 후 자동 생성> 딥러닝 모델 파일 저장 폴더 (약 830MB, git에는 포함하지 않음)
 ``` 
-## 다이어 그램
+## 📖 다이어 그램
 ```mermaid
 sequenceDiagram
   participant User as 사용자
