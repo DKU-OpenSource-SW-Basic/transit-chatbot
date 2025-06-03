@@ -7,17 +7,18 @@
 
 ##  📁 파일 구조
 ``` 
-├── Json/             # 버스, 지하철 ID 등 정보
-├── csv/              # 버스, 지하철 ID 등 정보
+├── data/             # 버스, 지하철 ID 등 정보
 ├── chatbot/          # Django 폴더
 │   ├── dispatcher.py         # 질문 분기 및 메인 처리 (버스/지하철 구분)
 │   ├── bus_handler.py        # 버스 도착정보 API 요청 처리
 │   ├── subway_handler.py     # 지하철 도착정보 API 요청 처리
 │   └── (생략: views.py, urls.py, models.py, admin.py, apps.py, tests.py, __init__.py 등 Django 기본)
+├── scripts/          # ELECTRA 모델 관련 코드
+│   ├── download_model.py     # 모델 다운로드 (setup_project.py 에서 호출)
+│   └── runKoelectra.py       # 모델 실행 코드
 ├── chatbot_project/  # Django 폴더
 ├── db.sqlite3        # DB 파일
 ├── setup_project.py  # 최초 실행용 자동화 스크립트
-├── download_model.py # 모델 다운로드 (setup에서 호출)
 ├── manage.py         # Django 기본 실행 파일
 ├── README.md         # 유저 가이드 + 개발자 가이드
 └── finetuned_model/  # <실행 후 자동 생성> 딥러닝 모델 파일 저장 폴더 (약 830MB, git에는 포함하지 않음)
