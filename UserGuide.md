@@ -24,7 +24,7 @@ python manage.py runserver --settings=chatbot_project.settings
 명령어를 입력하시면 해결될 수 있습니다.
 ```
 
-## 📖 사용 방법법
+## 📖 사용 방법
 - 웹페이지의 기본 화면이다
 - 아래 있는 공간에 채팅을 입력하여 대답을 받는다.
 
