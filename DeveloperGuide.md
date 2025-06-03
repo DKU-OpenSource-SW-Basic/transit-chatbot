@@ -8,8 +8,8 @@
 ## 사전준비
 - **Python 3.8 이상 필요**
 - git
-- 공공 데이터 포털의 APIKey 
-- **사용할 APIKEY 신청 필요. https://www.data.go.kr/ 에서 신청**
+- **사용할 API KEY 신청 필요. https://www.data.go.kr/ 에서 신청**
+  - 공공데이터포털, 서울대중교통, 서울열린데이터광장 등 세 곳에서 key를 발급 받아야 한다. 
 
 ##  📁 파일 구조
 ``` 
@@ -177,7 +177,7 @@ sequenceDiagram
 
 ### 모델 파인튜닝 방법
 1. `koelectra_training_code.ipynb` 를 [Colab](https://colab.research.google.com/) 또는 [jupyter notebook](https://jupyter.org/) 등 `ipynb`를 사용할 수 있는 환경에서 실행한다.(물론 코드만 따와서 python에서도 실행할 수 있다.)
-2. `train_epoch`, `learning_rate`, `train_batch_size` 등 학습에 필요한 조건들을 목적에 맞게 조절한다. slot만 학습시키는 것도 가능하고, intent만 학습시키는 것도 가능하며, 둘 모두 학습시키는 것 역시 가능하다. 
+2. `train_epoch`, `learning_rate`, `train_batch_size` 등 학습에 필요한 조건들을 목적에 맞게 조절한다. slot만 학습시키는 것도 가능하고, intent만 학습시키는 것도 가능하며, 둘 모두 동시에 학습시키는 것 역시 가능하다. 
 3. 마찬가지로 slot과 intent를 병렬로 학습하므로 둘 다 조절해야 하며, 파인튜닝이므로 learning_rate는 작게 하는 것을 권장한다.
 4. `파인 튜닝용 코드` 라는 텍스트 아래 있는 코드에 학습용 데이터와 Loss 및 Accuracy 측정용 대조군 데이터를 넣는다. `train_path`와 `eval_path`에 입력한다.
 5. 기존 사용하던, 파인튜닝을 실행할 모델의 주소를 입력한다. `slot_model`과 `intent_model`를 각각 조정한다.
@@ -215,8 +215,10 @@ sequenceDiagram
 - API 키 및 주요 데이터 파일은 .env나 별도 비공개 파일로 관리 필요(배포 시 보안 유의)
 - 질문의 유연성(오타, 띄어쓰기 등) 대응 위해 fuzzy matching 적극 활용
 - 모델을 학습/파인튜닝 한다면 Loss가 n연속으로 올라갈 경우 강제중단하는 `EarlyStoppingCallback` 사용을 권장한다. (과적합 방지용으로 사용)
-- - `trainer = Trainer(...)` 부분에, `callbacks=[EarlyStoppingCallback(early_stopping_patience=n)]`를 넣는다. (n은 임의의 정수. 2를 사용할 경우 2연속 loss 상승시 강제종료)
-- - 다시 말하지만, 병렬로 학습하기 때문에, slot과 intent를 담당하는 두 부분 모두에 위 코드`callbacks[...]`를 넣어야 한다.
+  - `trainer = Trainer(...)` 부분에, `callbacks=[EarlyStoppingCallback(early_stopping_patience=n)]`를 넣는다. (n은 임의의 정수. 2를 사용할 경우 2연속 loss 상승시 강제종료)
+  - 다시 말하지만, 병렬로 학습하기 때문에, slot과 intent를 담당하는 두 부분 모두에 위 코드`callbacks[...]`를 넣어야 한다.
+  - 모델을 많은 epoch으로 학습시킬 경우, checkpoint 저장 단위를 step으로도 할 수 있다.
+     - 이때, `slot_args`와 `intent_args` 부분의 `save_strategy="epoch"` 코드를 `save_strategy="steps"`로 수정하고, `save_steps=n`을 추가로 입력해야한다. (n은 학습 주기)
 
 ## 참고/유의사항
 - 정류장명, 역명, 노선/호선번호 입력 시 오타/유사명/복수후보 상황은 fuzzy matching과 후보 우선순위 조정으로 극복함
@@ -254,13 +256,13 @@ http://swopenapi.seoul.go.kr/api/subway/{APIKEY}/json/realtimeStationArrival/0/5
 https://apis.data.go.kr/1613000/SubwayInfoService/getSubwayArrivalInfo
 
 ## 사용한 라이브러리
-- django
+- **django**
+- **torch**
+- **transformers**
 - requests
 - urllib.parse
 - xml.etree.ElementTree 
 - json
 - pandas
-- torch
-- transformers
 - gdown
 
