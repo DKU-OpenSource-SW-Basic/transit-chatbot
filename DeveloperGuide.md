@@ -103,7 +103,7 @@ sequenceDiagram
     - 경기: 노선ID+정류장ID로 경기도 API 2단계 호출(JSON), 잔여좌석/혼잡도 등 포함 결과 생성
     - 모든 결과 중복 제거 후 최대 4건까지 요약, 사용자 입력과 실제 매칭명 모두 표기
 - **주요 구현**:
-  - `find_best_stop_name`, `deduplicate_and_limit`, `get_seoul_arrival`, g`et_gyeonggi_arrival` 등 (모두 함수 단위 구현)
+  - `find_best_stop_name`, `deduplicate_and_limit`, `get_seoul_arrival`, `get_gyeonggi_arrival` 등 (모두 함수 단위 구현)
 - **API 핸들 특징**
   - 서울/경기권 동시 지원: 노선ID, 정류소ID 매칭 및 fuzzy matching으로 양쪽 API 동시 접근(최대 4건 출력)
   - 정류장명 오타/유사명 robust 대응: difflib 기반 유사도 측정으로 정확하지 않은 입력도 최대한 매칭
@@ -197,79 +197,17 @@ sequenceDiagram
 학습 데이터는 아래와 같이 구성되어있다. 이 프로젝트에서 학습 데이터는 수작업으로 제작하였음을 알린다. 
 자세한 내용은 샘플로 첨부한 100개의 문장, `data/Json/electra_slot_tagging_data_sample.json`을 참조
 ```json
-  {
-    "tokens": [
-      "22-3(신경대)",
-      "버스",
-      "는"
-      "지금",
-      "근내리입구",
-      "정거장",
-      "에",
-      "언제",
-      "도착할까요?"
-    ],
-    "tags": [
-      "B-ROUTE",
-      "B-TRANSPORT-BUS",
-      "O",
-      "O",
-      "B-STATION",
-      "O",
-      "O",
-      "O",
-      "O"
-    ],
-    "intent": "arrival_bus"
-  },
-  {
-    "tokens": [
-      "경의선",
-      "열차",
-      "농협은행.시장입구앞(마을)방향",
-      "이라는데,",
-      "까치산",
-      "역",
-      "언제",
-      "도착합니까?"
-    ],
-    "tags": [
-      "B-LINE",
-      "B-TRANSPORT-SUBWAY",
-      "B-DIRECTION",
-      "O",
-      "B-STATION",
-      "O",
-      "O",
-      "O"
-    ],
-    "intent": "arrival_subway"
-  },
-  {
-    "tokens": [
-      "06호선",
-      "지하철",
-      "이태원",
-      "역",
-      "에서",
-      "타면",
-      "혼잡도",
-      "엄청",
-      "높을까?"
-    ],
-    "tags": [
-      "B-LINE",
-      "B-TRANSPORT-SUBWAY",
-      "B-STATION",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O"
-    ],
-    "intent": "congestion"
-  }
+[
+  {"tokens":["22-3","버스","는","지금","근내리입구","정거장","에","언제","도착할까요?"],
+   "tags":["B-ROUTE","B-TRANSPORT-BUS","O","O","B-STATION","O","O","O","O"],
+   "intent":"arrival_bus"},
+  {"tokens":["경의선","열차","농협은행.시장입구앞(마을)방향","이라는데,","까치산","역","언제","도착합니까?"],
+   "tags":["B-LINE","B-TRANSPORT-SUBWAY","B-DIRECTION","O","B-STATION","O","O","O"],
+   "intent":"arrival_subway"},
+  {"tokens":["06호선","지하철","이태원","역","에서","타면","혼잡도","엄청","높을까?"],
+   "tags":["B-LINE","B-TRANSPORT-SUBWAY","B-STATION","O","O","O","O","O","O"],
+   "intent":"congestion"}
+]
 ```
 
 ## 기타/보충설명
@@ -297,7 +235,7 @@ sequenceDiagram
 https://data.seoul.go.kr/dataList/OA-15442/S/1/datasetView.do
 - **서울 버스 정거장 데이터** <br>
 https://data.seoul.go.kr/dataList/OA-15067/S/1/datasetView.do 
-- **울 버스 노선 번호 데이터** <br>
+- **서울 버스 노선 번호 데이터** <br>
 https://data.seoul.go.kr/dataList/OA-1095/F/1/datasetView.do
 - **경기 버스 노선 데이터** <br>
 http://www.gbis.go.kr/excel/service/busInfo/metroBus/metroBusListExcel?currentPage=&rowPerPage=&cmd=searchMetroCenter&centerId=4111000000 
