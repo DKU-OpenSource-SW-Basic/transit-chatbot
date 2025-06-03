@@ -1,0 +1,2551 @@
+[
+  {
+    "tokens": [
+      "유동2리",
+      "에서",
+      "1101",
+      "번",
+      "시내버스",
+      "얼마나",
+      "기다려야",
+      "하는지",
+      "혹시",
+      "아세요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "지금",
+      "범양2차아파트",
+      "정거장인데",
+      "승합차",
+      "언제쯤",
+      "탈",
+      "수",
+      "있냐"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "930-4B",
+      "급행버스",
+      "는",
+      "군포공영차고지(경유)",
+      "에",
+      "정차하나요?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "B-STATION",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "혹시",
+      "여기서",
+      "77",
+      "번",
+      "시외버스",
+      "언제",
+      "도착하는지?"
+    ],
+    "tags": [
+      "O",
+      "O",
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "혹시",
+      "월곶에코피아",
+      "정거장에",
+      "수원DRT",
+      "공항버스",
+      "지금쯤",
+      "오는지",
+      "아세요?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "3214",
+      "급행버스",
+      "는",
+      "지역난방공사.신나무실쌍용아파트",
+      "에",
+      "정차하나요?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "B-STATION",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "1006",
+      "광역버스",
+      "아미리",
+      "정류장에서",
+      "타려면",
+      "얼마나",
+      "기다려야",
+      "됨?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "터줏대감",
+      "역에",
+      "천천푸르지오상가방향",
+      "가는",
+      "21-14",
+      "광역버스",
+      "오는",
+      "중이냐"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "지금",
+      "수원여대입구",
+      "정류소에",
+      "한전다리앞방향",
+      "급행",
+      "버스",
+      "오고",
+      "있는",
+      "거",
+      "봤어?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-TRANSPORT-BUS",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "하남초등학교",
+      "정류소에서",
+      "용암초등학교.이태원2동주민센터방향",
+      "급행",
+      "버스",
+      "곧",
+      "온대?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-TRANSPORT-BUS",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "야,",
+      "부곡2단지아파트후문",
+      "정류소에",
+      "G1200",
+      "승합차",
+      "아직",
+      "안",
+      "왔지?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "위아주식회사",
+      "역에서",
+      "01A",
+      "시내버스",
+      "언제",
+      "도착하냐고",
+      "좀",
+      "알려줘봐."
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "청평터미널",
+      "에",
+      "중곡동입구삼거리방면",
+      "학생03-A",
+      "번",
+      "시외버스",
+      "진짜",
+      "오는",
+      "거",
+      "맞아?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "혹시",
+      "여기서",
+      "광주3",
+      "번",
+      "버스",
+      "언제",
+      "도착하는지?"
+    ],
+    "tags": [
+      "O",
+      "O",
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "혹시",
+      "용천3리종점(경유)",
+      "에서",
+      "5401",
+      "번",
+      "버스",
+      "타보셨어요?",
+      "얼마나",
+      "자주",
+      "오나요?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "오이도입구",
+      "정류장에",
+      "송파나루역방면",
+      "가는",
+      "셔틀버스",
+      "도착",
+      "시간",
+      "궁금함."
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "율길초교",
+      "정류소에서",
+      "향남초등학교방면",
+      "광역버스",
+      "곧",
+      "온대?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "혹시",
+      "034-1",
+      "저상버스",
+      "지금",
+      "영동빌라",
+      "정류장",
+      "언제",
+      "지나갈까요?"
+    ],
+    "tags": [
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "지금",
+      "해군호텔",
+      "정거장에",
+      "6647",
+      "출근버스",
+      "올",
+      "타이밍임?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "주공아파트121동",
+      "정류소에서",
+      "장항굴다리방향",
+      "셔틀버스",
+      "다음",
+      "차",
+      "곧",
+      "와?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "25-31",
+      "고속버스",
+      "양촌마을앞(경유)",
+      "정류소에서",
+      "몇",
+      "분",
+      "안에",
+      "도착함?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "박노수미술관",
+      "정거장에서",
+      "버스",
+      "언제",
+      "오는지",
+      "보고",
+      "싶은데",
+      "어디서",
+      "봄?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "지금",
+      "경원여객(경유)",
+      "역",
+      "앞인데",
+      "마을버스",
+      "언제까지",
+      "기다려야",
+      "되냐"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "포미재아파트",
+      "정류장에서",
+      "3402",
+      "노선버스",
+      "아직",
+      "멀었음?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "야",
+      "부안1리슈퍼",
+      "정거장에",
+      "구로06",
+      "노선버스",
+      "몇",
+      "시에",
+      "오냐"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "신촌방",
+      "정류소로",
+      "오는",
+      "105",
+      "버스",
+      "어디쯤임?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "지금",
+      "북한산국립공원송추계곡.푸른아파트",
+      "에서",
+      "M7731",
+      "번",
+      "버스",
+      "타면",
+      "늦지",
+      "않아?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "대야미삼거리",
+      "정거장에서",
+      "탈",
+      "셔틀버스",
+      "언제",
+      "오는지",
+      "궁금한데"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "제일공단입구",
+      "정류장에서",
+      "은곡마을진입로행",
+      "시외버스",
+      "기다리면",
+      "얼마나",
+      "걸리냐?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "지금",
+      "시민회관.보건소",
+      "에서",
+      "길음사거리쪽",
+      "고속버스",
+      "타려면",
+      "1167",
+      "번",
+      "타면",
+      "되나요?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-TRANSPORT-BUS",
+      "O",
+      "B-ROUTE",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "강월초교입구사거리",
+      "정거장에",
+      "청림동푸르지오아파트121동앞쪽",
+      "방면",
+      "공항버스",
+      "지금",
+      "도착함?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "행신SK뷰아파트",
+      "역에",
+      "중원구청사거리방면",
+      "가는",
+      "352",
+      "공항버스",
+      "오는",
+      "중이냐"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "야,",
+      "구양리",
+      "정류소에",
+      "9(학통등교)",
+      "출근버스",
+      "아직",
+      "안",
+      "왔지?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "마포11",
+      "고속버스",
+      "도곡2리마을회관행",
+      "지금",
+      "서인사거리.맥도널드앞",
+      "정거장에",
+      "지나가려면",
+      "얼마나",
+      "남았어?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "B-DIRECTION",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "3600",
+      "마을버스",
+      "지금",
+      "미평리",
+      "정거장",
+      "근처임?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "B-TRANSPORT-BUS",
+      "O",
+      "B-STATION",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_bus"
+  },
+  {
+    "tokens": [
+      "이거",
+      "세류",
+      "에서",
+      "09호선",
+      "열차",
+      "을",
+      "타야",
+      "된다고",
+      "하지",
+      "않았냐?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "실례지만,",
+      "강남구청",
+      "역에서",
+      "인창주공2.4단지행",
+      "가는",
+      "신림선",
+      "급행",
+      "지하철",
+      "곧",
+      "도착하나요?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "여기서",
+      "경강선",
+      "고속열차",
+      "타면,",
+      "중계",
+      "역에서도",
+      "탈",
+      "수",
+      "있을까?"
+    ],
+    "tags": [
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "전철",
+      "지금",
+      "서원",
+      "정류소에",
+      "오고",
+      "있는",
+      "중?"
+    ],
+    "tags": [
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "어린이대공원",
+      "역",
+      "06호선",
+      "급행",
+      "지하철",
+      ",",
+      "도림동자치회관방면",
+      "승강장",
+      "어디야?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "서현",
+      "정거장에서",
+      "기차",
+      "언제",
+      "들어오는지",
+      "말",
+      "좀",
+      "해봐"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "원인재",
+      "정류소",
+      "근처인데",
+      "반월성삼거리방향",
+      "급행지하철",
+      "곧",
+      "오냐?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-DIRECTION",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "지금",
+      "효자",
+      "에서",
+      "야탑3동행정복지센터방면",
+      "03호선",
+      "전철",
+      "타도",
+      "늦진",
+      "않겠지?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "상갈",
+      "에서",
+      "타는",
+      "07호선",
+      "경전철",
+      ",",
+      "곧",
+      "오는지",
+      "여쭈어봐도",
+      "되겠습니까?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "태평",
+      "정거장에서",
+      "기다리는데",
+      "급행열차",
+      "언제",
+      "오는지",
+      "말",
+      "좀",
+      "해봐"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "굴봉산",
+      "역에서",
+      "당동1리.텃골쪽",
+      "갈",
+      "01호선",
+      "전동차",
+      "가",
+      "오는",
+      "시간",
+      "아시나요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "동춘",
+      "에서",
+      "출발하는",
+      "우이신설경전철",
+      "열차",
+      ",",
+      "이",
+      "플랫폼",
+      "맞을까요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "혹시",
+      "중계",
+      "정거장에서",
+      "영중면사무소방향",
+      "가는",
+      "급행열차",
+      "지금",
+      "올",
+      "타이밍임?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "아시아드경기장",
+      "에서",
+      "타려면",
+      "07호선",
+      "에서",
+      "몇",
+      "분",
+      "기다려야해?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-LINE",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "개화산",
+      "정거장에",
+      "03호선",
+      "열차",
+      "도착",
+      "예정",
+      "시간",
+      "있음?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "수원",
+      "역에서",
+      "무왕1리마을회관방향",
+      "방면",
+      "전동차",
+      "몇",
+      "분",
+      "남았는지",
+      "궁금함"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "아현",
+      "역에서",
+      "03호선",
+      "을",
+      "언제",
+      "탈",
+      "수",
+      "있을까요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "성균관대",
+      "에서",
+      "타는",
+      "우이신설경전철",
+      "기차",
+      ",",
+      "지금쯤",
+      "오냐?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "영통",
+      "역에서",
+      "기차",
+      "타려면",
+      "얼마나",
+      "기다려야",
+      "됨?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "이천시청.이천세무서쪽",
+      "가는",
+      "01호선",
+      "지하철",
+      ",",
+      "덕계",
+      "역에서",
+      "지금",
+      "타도",
+      "괜찮을까요?"
+    ],
+    "tags": [
+      "B-DIRECTION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "문배동이안아파트앞방면",
+      "가는",
+      "04호선",
+      "급행열차",
+      ",",
+      "원흥",
+      "역에",
+      "서나요?"
+    ],
+    "tags": [
+      "B-DIRECTION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "GTX-A",
+      "매트로",
+      "동탄",
+      "역에",
+      "곧",
+      "오겠지?"
+    ],
+    "tags": [
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-STATION",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "공항철도",
+      "경전철",
+      "지금",
+      "마석",
+      "정류소",
+      "지나고",
+      "있는",
+      "중임?"
+    ],
+    "tags": [
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "야,",
+      "구반포",
+      "역",
+      "방학3동신동아프라자방면",
+      "경의선",
+      "급행",
+      "열차",
+      "지금쯤",
+      "오냐?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "답십리",
+      "역에",
+      "02호선",
+      "경전철",
+      "곧",
+      "도착하냐?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  },
+  {
+    "tokens": [
+      "부평",
+      "에서",
+      "우이신설경전철",
+      "타고",
+      "문호1리방면",
+      "가려는데",
+      "지금",
+      "사람",
+      "많지?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "대성리",
+      "역",
+      "03호선",
+      "기차",
+      ",",
+      "여유",
+      "있는",
+      "시간대",
+      "추천해주실",
+      "수",
+      "있나요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "마전",
+      "역",
+      "경강선",
+      "급행",
+      "지하철",
+      "탈",
+      "때",
+      "미어터질",
+      "정도로",
+      "혼잡하나요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "환경사업소.유니켐행",
+      "쪽",
+      "가는",
+      "용두",
+      "출발",
+      "급행열차",
+      "얼마나",
+      "심각해?"
+    ],
+    "tags": [
+      "B-DIRECTION",
+      "O",
+      "O",
+      "B-STATION",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "인덕원",
+      "역에서",
+      "경강선",
+      "경전철",
+      "타려는데,",
+      "어느",
+      "칸이",
+      "가장",
+      "괜찮을까요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "동암",
+      "역",
+      "김포도시철도",
+      "전동차",
+      "탈",
+      "때",
+      "다리도",
+      "못",
+      "움직임",
+      "ㄹㅇ"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "까치산",
+      "에서",
+      "수인분당선",
+      "타고",
+      "개봉푸르지오정문행",
+      "가는",
+      "지하철",
+      ",",
+      "앉아서",
+      "갈",
+      "수",
+      "있는",
+      "자리가",
+      "있을까요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "원정6리방면",
+      "03호선",
+      "전철",
+      ",",
+      "가천대",
+      "역에서",
+      "출퇴근",
+      "시간대가",
+      "언제인지",
+      "아세요?"
+    ],
+    "tags": [
+      "B-DIRECTION",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "09호선",
+      "급행",
+      "타면",
+      "둔촌동",
+      "쪽",
+      "헬은",
+      "피할",
+      "수",
+      "있나요?"
+    ],
+    "tags": [
+      "B-LINE",
+      "O",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "자라목방면",
+      "지하철",
+      "지금",
+      "탔다가",
+      "질식할",
+      "뻔;",
+      "어룡",
+      "부터",
+      "장난",
+      "아님"
+    ],
+    "tags": [
+      "B-DIRECTION",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "거여역2번출구방향",
+      "가는",
+      "02호선",
+      "급행",
+      "지하철",
+      ",",
+      "굽은다리",
+      "역에선",
+      "몇",
+      "시가",
+      "한산하지?"
+    ],
+    "tags": [
+      "B-DIRECTION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "불암산",
+      "역에서",
+      "공항철도",
+      "타면",
+      "봉은사쪽",
+      "고속열차",
+      "진짜",
+      "사람",
+      "우글우글임?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "O",
+      "B-DIRECTION",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "원당",
+      "에서",
+      "타는",
+      "급행열차",
+      "경강선",
+      ",",
+      "태릉시장쪽",
+      "가는",
+      "거",
+      "사람들",
+      "겁나",
+      "많아?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "B-LINE",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "답십리",
+      "역",
+      "래미안하이리버아파트행",
+      "서해선",
+      "급행열차",
+      "지금",
+      "타도",
+      "괜찮아?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "봉천",
+      "역",
+      "신분당선",
+      "전철",
+      ",",
+      "송추IC출입(경유)방향",
+      "방향은",
+      "요즘",
+      "탈만해?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "금화초등학교방향",
+      "쪽",
+      "가는",
+      "삼양",
+      "출발",
+      "전철",
+      "얼마나",
+      "심각해?"
+    ],
+    "tags": [
+      "B-DIRECTION",
+      "O",
+      "O",
+      "B-STATION",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "지금",
+      "군자",
+      "역에서",
+      "08호선",
+      "지하철",
+      "타도",
+      "괜찮은",
+      "시간대야?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "마포구청",
+      "역에서",
+      "상신리행",
+      "인천선",
+      "지하철",
+      "타려면",
+      "몇",
+      "번째",
+      "칸이",
+      "좀",
+      "낫나요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "대야미",
+      "에서",
+      "인천선",
+      "타고",
+      "탑성마을방면",
+      "가려는데",
+      "지금",
+      "사람",
+      "많지?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "다산",
+      "역에서",
+      "김량장동어울림아파트방면",
+      "가는",
+      "경춘선",
+      "기차",
+      ",",
+      "아침엔",
+      "꽉",
+      "차지?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "신분당선",
+      "열차",
+      ",",
+      "부평",
+      "역에서는",
+      "몇",
+      "번째",
+      "칸이",
+      "제일",
+      "편해?"
+    ],
+    "tags": [
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "월드마트방면",
+      "우이신설경전철",
+      "급행",
+      "지하철",
+      ",",
+      "광교중앙",
+      "역에서는",
+      "여전히",
+      "사람",
+      "많아?"
+    ],
+    "tags": [
+      "B-DIRECTION",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "지금",
+      "우이신설경전철",
+      "시청",
+      "출발해서",
+      "진영식당.진영슈퍼행",
+      "갈",
+      "건데",
+      "사람",
+      "없는",
+      "편이야?"
+    ],
+    "tags": [
+      "O",
+      "B-LINE",
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "김유정",
+      "역",
+      "의정부경전철",
+      "매트로",
+      ",",
+      "붐비는",
+      "칸",
+      "피하는",
+      "요령",
+      "있어?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "월롱",
+      "역에서",
+      "01호선",
+      "타고",
+      "독산초등학교방면",
+      "가려는데",
+      "사람",
+      "많을까?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
+  },
+  {
+    "tokens": [
+      "지금",
+      "합정",
+      "정거장에서",
+      "인헌시장입구방면",
+      "7-1(학통등교)",
+      "고속열차",
+      "탑승해도",
+      "돼?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "B-ROUTE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "이",
+      "01호선",
+      "급행지하철",
+      "하안주공513동쪽",
+      "이면",
+      "저쪽",
+      "문",
+      "열리냐?"
+    ],
+    "tags": [
+      "O",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "5700",
+      "급행열차",
+      "가",
+      "도착하면",
+      "삼성중앙",
+      "정류소에서",
+      "자동",
+      "알림",
+      "뜨나요?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "춘의",
+      "정류장에서",
+      "거멀행",
+      "쪽은",
+      "사람들이",
+      "많이",
+      "기다리나요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "부천종합운동장",
+      "역",
+      "앞에서",
+      "봉천역쪽",
+      "놓쳤을",
+      "때",
+      "심정:",
+      "생명",
+      "회복",
+      "안",
+      "됨"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "83",
+      "번",
+      "급행",
+      "열차",
+      ",",
+      "안석2통쪽",
+      "가는",
+      "거",
+      "급행",
+      "열차",
+      "맞아?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "B-TRANSPORT-SUBWAY",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "영등포07",
+      "급행",
+      "열차",
+      "는",
+      "좌석지정이",
+      "있나요?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "B-TRANSPORT-SUBWAY",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "광주1",
+      "이거",
+      "진짜",
+      "구반포",
+      "정류소에서",
+      "타는",
+      "거",
+      "맞는",
+      "거냐?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "O",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "이",
+      "매트로",
+      "에서",
+      "내리려면",
+      "대체",
+      "주안국가산단",
+      "까지",
+      "몇",
+      "정거장이나",
+      "남았을까?"
+    ],
+    "tags": [
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "5623",
+      "번",
+      "기차",
+      ",",
+      "중간에",
+      "화장실",
+      "있는",
+      "정류장",
+      "있나요?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "이",
+      "시티병원방향",
+      "경의선",
+      "매트로",
+      "을",
+      "타면",
+      "원종",
+      "역",
+      "지나가나요?"
+    ],
+    "tags": [
+      "O",
+      "B-DIRECTION",
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "B-STATION",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "학여울",
+      "역에",
+      "있는",
+      "델리만쥬파는",
+      "가게,",
+      "은근",
+      "맛집이더라?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "918-7",
+      "번",
+      "지하철",
+      "는",
+      "삼가",
+      "쪽",
+      "정류소에서도",
+      "운행하나요?"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "대치",
+      "정류장에서",
+      "김포도시철도",
+      "을",
+      "탈",
+      "수",
+      "있는",
+      "줄이",
+      "따로",
+      "있는지",
+      "궁금합니다."
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "B-LINE",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "지금",
+      "마곡엠밸리4단지방향",
+      "까지",
+      "몇",
+      "번째",
+      "정거장이",
+      "남았어?"
+    ],
+    "tags": [
+      "O",
+      "B-DIRECTION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "퇴계원",
+      "역",
+      "근방에",
+      "열차",
+      "타는",
+      "분들이",
+      "줄",
+      "어디에",
+      "서는지",
+      "알",
+      "수",
+      "있을까요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "지금",
+      "독정",
+      "에서",
+      "만민촌방면",
+      "가려면",
+      "20A",
+      "번",
+      "지하철",
+      "타면",
+      "돼?"
+    ],
+    "tags": [
+      "O",
+      "B-STATION",
+      "O",
+      "B-DIRECTION",
+      "O",
+      "B-ROUTE",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "01A",
+      "타러",
+      "강남대",
+      "정류소",
+      "갔는데",
+      "아무도",
+      "없더라",
+      "ㄷㄷ"
+    ],
+    "tags": [
+      "B-ROUTE",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "고덕",
+      "정류장",
+      "가서",
+      "전철",
+      "환승",
+      "안내판",
+      "찾는",
+      "건",
+      "레이드",
+      "보스급."
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "B-TRANSPORT-SUBWAY",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  },
+  {
+    "tokens": [
+      "보라매",
+      "정류장에서",
+      "내릴",
+      "때",
+      "벨은",
+      "언제",
+      "누르는",
+      "게",
+      "좋을까요?"
+    ],
+    "tags": [
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "other"
+  }
+]
