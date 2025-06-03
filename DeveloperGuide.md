@@ -194,7 +194,7 @@ sequenceDiagram
 학습 데이터는 아래와 같이 구성되어있다. 이 프로젝트에서 학습 데이터는 수작업으로 제작하였음을 알린다. 
 자세한 내용은 샘플로 첨부한 100개의 문장, `data/Json/electra_slot_tagging_data_sample.json`을 참조
 ```
-{
+  {
     "tokens": [
       "22-3(신경대)",
       "버스",
@@ -219,7 +219,7 @@ sequenceDiagram
     ],
     "intent": "arrival_bus"
   },
-{
+  {
     "tokens": [
       "경의선",
       "열차",
@@ -241,8 +241,8 @@ sequenceDiagram
       "O"
     ],
     "intent": "arrival_subway"
-  }
-{
+  },
+  {
     "tokens": [
       "06호선",
       "지하철",
