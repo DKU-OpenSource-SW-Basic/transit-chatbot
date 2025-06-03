@@ -1,6 +1,6 @@
 # 🚀 Developer Guide
 ## 사전준비
-- Python 3.8 이상 필요
+- **Python 3.8 이상 필요**
 - git
 - 공공 데이터 포털의 APIKey 
 - **사용할 API 신청 필요 https://www.data.go.kr/ 에서 신청**
@@ -134,24 +134,30 @@ subway =SubwayInfo()
 # 모델 학습 및 파인튜닝 방법
 
 ## 모델 학습 방법
-1. koelectra_training_code.ipynb 를 colab 또는 jupyter notebook 등 ipynb를 열 수 있는 곳에서 실행한다.
-2. train_epoch, learning_rate, train_batch_size 등을 목적에 맞게 조절한다. slot과 intent를 병렬로 학습하므로, 둘 다 조절한다.
-3. `# 최초 학습용 코드` 주석이 있는 곳에 학습용 데이터와 Loss 및 Accuracy 측정용 대조군 데이터를 넣는다. train_path와 eval_path에 입력한다.
-4. 코드를 실행하여 로스값과 정확도 등을 확인하면서 결과를 주시한다.
+1. `koelectra_training_code.ipynb` 를 colab 또는 jupyter notebook 등 ipynb를 사용할 수 있는 환경에서 실행한다.
+2. `train_epoch`, `learning_rate`, `train_batch_size` 등을 목적에 맞게 조절한다. slot과 intent를 병렬로 학습하므로, 둘 다 조절해야 한다.
+3. `# 최초 학습용 코드` 주석이 있는 곳에 학습용 데이터와 Loss 및 Accuracy 측정용 대조군 데이터를 넣는다. `train_path`와 `eval_path`에 입력한다.
+4. 코드를 실행하여 로스값과 정확도 등을 학습 과정을 주시하면서 결과를 기다린다.
 
 ## 모델 파인튜닝 방법
-1. koelectra_training_code.ipynb 를 colab 또는 jupyter notebook 등 ipynb를 열 수 있는 곳에서 실행한다.
-2. train_epoch, learning_rate, train_batch_size 등을 목적에 맞게 조절한다. 파인튜닝이므로 learning_rate는 작게끔 하는 것을 추천한다. 
-4. `파인 튜닝용 코드` 라는 텍스트 아래 있는 코드에 학습용 데이터와 Loss 및 Accuracy 측정용 대조군 데이터를 넣는다. train_path와 eval_path에 입력한다.
-5. 기존 사용하던, 파인튜닝을 실행할 모델의 주소를 입력한다. slot_model과 intent_model를 각각 조정한다.
-6. 코드를 실행하여 로스값과 정확도 등을 확인하면서 결과를 주시한다.
+1. `koelectra_training_code.ipynb` 를 colab 또는 jupyter notebook 등 ipynb를 사용할 수 있는 환경에서 실행한다. 
+2. `train_epoch`, `learning_rate`, `train_batch_size` 등 학습에 필요한 조건들을 목적에 맞게 조절한다.
+3. 마찬가지로 slot과 intent를 병렬로 학습하므로 둘 다 조절해야 하며, 파인튜닝이므로 learning_rate는 작게 하는 것을 권장한다.
+4. `파인 튜닝용 코드` 라는 텍스트 아래 있는 코드에 학습용 데이터와 Loss 및 Accuracy 측정용 대조군 데이터를 넣는다. `train_path`와 `eval_path`에 입력한다.
+5. 기존 사용하던, 파인튜닝을 실행할 모델의 주소를 입력한다. `slot_model`과 `intent_model`를 각각 조정한다.
+6. 코드를 실행하여 로스값과 정확도 등을 학습 과정을 주시하면서 결과를 기다린다.
 
+## 학습할 때 알면 좋은 것
+- Loss가 n연속으로 올라갈 경우 강제중단하는 `EarlyStoppingCallback` 사용을 권장한다. (과적합 방지용으로 사용한다.)
+- `trainer = Trainer(...)` 부분에, `callbacks=[EarlyStoppingCallback(early_stopping_patience=n)]`를 넣는다.(n은 임의의 정수를 넣자)
+- 다시 말하지만, 병렬로 학습하기 때문에, slot과 intent를 담당하는 두 부분 모두에 위 코드를 넣어야 한다.
+  
 ## 사용해야 하는 데이터셋
 모델 학습시 필요한 라벨들은 다음과 같다. <br>
 `label_list = ['B-DIRECTION', 'B-LINE', 'B-ROUTE', 'B-STATION', 'B-TRANSPORT-BUS', 'B-TRANSPORT-SUBWAY', 'O'] # slot목록` <br>
 `intent_list = ['arrival_bus', 'arrival_subway', 'congestion', 'other'] # intent목록` <br>
 
-학습 데이터는 아래와 같이 구성되어있다.
+학습 데이터는 아래와 같이 구성되어있다. 이 프로젝트에서 학습 데이터는 수작업으로 제작하였음을 알린다. 
 ```
 {
     "tokens": [
@@ -161,8 +167,9 @@ subway =SubwayInfo()
       "지금",
       "근내리입구",
       "정거장",
-      "지나고",
-      "있나요?"
+      "에",
+      "언제",
+      "도착할까요?"
     ],
     "tags": [
       "B-ROUTE",
@@ -170,6 +177,7 @@ subway =SubwayInfo()
       "O",
       "O",
       "B-STATION",
+      "O",
       "O",
       "O",
       "O"
