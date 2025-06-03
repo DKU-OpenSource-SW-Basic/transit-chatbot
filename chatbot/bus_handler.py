@@ -42,7 +42,7 @@ def find_best_stop_name(query: str, candidates: List[str], threshold=0.4) -> str
     matches = difflib.get_close_matches(query, candidates, n=1, cutoff=threshold)
     return matches[0] if matches else query
 
-def get_seoul_arrival(route_no: str, station_name: str, top_n: int = 2) -> List[str]:
+def get_seoul_arrival(route_no: str, station_name: str, top_n: int = 4) -> List[str]:
     route_id = seoul_route_map.get(route_no)
     if not route_id:
         return []
@@ -100,49 +100,51 @@ def get_seoul_arrival(route_no: str, station_name: str, top_n: int = 2) -> List[
         return results
     except Exception as e:
         return []
-
-
-def get_gyeonggi_route_id(route_no: str) -> Optional[str]:
+    
+def get_gyeonggi_route_ids(route_no: str) -> List[str]:
     matches = gyeonggi_routes[gyeonggi_routes["노선번호"] == route_no]
-    return str(matches.iloc[0]["노선ID"]) if not matches.empty else None
+    return [str(x) for x in matches["노선ID"].unique()] if not matches.empty else []
 
-def get_gyeonggi_arrival_by_route_with_curl(route_no: str, station_name: str) -> List[str]:
-    route_id = get_gyeonggi_route_id(route_no)
-    if not route_id:
+def get_gyeonggi_arrival(route_no: str, station_name: str) -> List[str]:
+    route_ids = get_gyeonggi_route_ids(route_no)
+    if not route_ids:
         return []
 
-    list_url = (
-        f"https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteStationListv2"
-        f"?serviceKey={GYEONGGI_SERVICE_KEY}&routeId={route_id}&format=json"
-    )
-    try:
+    results = []
+    seen_plates = set()
+
+    for route_id in route_ids:
+        # 1. 노선 전체 정류소 목록 가져오기 (API 1회)
+        list_url = (
+            f"https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteStationListv2"
+            f"?serviceKey={GYEONGGI_SERVICE_KEY}&routeId={route_id}&format=json"
+        )
         command_list = shlex.split(f"curl -k '{list_url}'")
         process_list = subprocess.Popen(command_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout_list, _ = process_list.communicate()
-
         if process_list.returncode != 0:
-            return []
+            continue
 
         try:
             data_list = json.loads(stdout_list)
             station_list = data_list.get("response", {}).get("msgBody", {}).get("busRouteStationList", [])
         except json.JSONDecodeError:
-            return []
+            continue
 
-        # 유사도 상위 2개
+        # 2. 입력 정류소명과 유사도가 높은 상위 2개의 stop_id 추출
         scored_stations = []
         min_similarity_threshold = 0.5
         for station in station_list:
             name = station.get("stationName")
-            if name:
+            stop_id = station.get("stationId")
+            if name and stop_id:
                 score = similarity(station_name, name)
                 if score >= min_similarity_threshold:
                     scored_stations.append((score, station))
         scored_stations.sort(reverse=True, key=lambda x: x[0])
-        matching_stations = [x[1] for x in scored_stations[:2]]
+        matching_stations = [x[1] for x in scored_stations[:2]]  # 상위 2개만
 
-        results = []
-        seen_plates = set()
+        # 3. 각 stop_id에 대해 도착정보 요청 (API 최대 2회)
         for station in matching_stations:
             stop_id = station.get("stationId")
             stop_name = station.get("stationName")
@@ -158,20 +160,14 @@ def get_gyeonggi_arrival_by_route_with_curl(route_no: str, station_name: str) ->
             stdout_arrival, _ = process_arrival.communicate()
             if process_arrival.returncode != 0:
                 continue
+
             try:
                 data_arrival = json.loads(stdout_arrival)
                 arrival_item = data_arrival.get("response", {}).get("msgBody", {}).get("busArrivalItem")
                 if arrival_item:
-                    crowded_map = {
-                        "0": "정보 없음",
-                        "1": "여유",
-                        "2": "보통",
-                        "3": "혼잡",
-                        "4": "매우 혼잡"
-                    }
-                    seat_route_types = {
-                        11, 12, 14, 16, 17, 21, 22, 41, 42, 51, 52
-                    }
+                    # 혼잡도, 좌석 등급 맵
+                    crowded_map = {"0": "정보 없음", "1": "여유", "2": "보통", "3": "혼잡", "4": "매우 혼잡"}
+                    seat_route_types = {11,12,14,16,17,21,22,41,42,51,52}
                     def format_remain_seat(remain, route_type):
                         if route_type in seat_route_types:
                             if remain is None or remain == -1:
@@ -185,9 +181,7 @@ def get_gyeonggi_arrival_by_route_with_curl(route_no: str, station_name: str) ->
                                 return "정보 없음"
                         else:
                             return "-"
-
                     route_type = int(arrival_item.get("routeTypeCd", 0))
-                    count_this_station = 0
                     for i in [1, 2]:
                         plate_no = arrival_item.get(f"plateNo{i}")
                         predict_time = arrival_item.get(f"predictTime{i}")
@@ -204,16 +198,11 @@ def get_gyeonggi_arrival_by_route_with_curl(route_no: str, station_name: str) ->
                                     f"{predict_time}분 / 잔여좌석: {remain_text} / 혼잡도: {crowded_text}"
                                 )
                                 results.append(info_str)
-                                count_this_station += 1
-                        if count_this_station >= 2:
-                            break
-                    if len(results) >= 4:
-                        return results
+                        if len(results) >= 4:
+                            return results
             except json.JSONDecodeError:
                 continue
-        return results
-    except Exception as e:
-        return []
+    return results
 
 def deduplicate_and_limit(seoul_results: List[str], gyeonggi_results: List[str], max_total=4) -> List[str]:
     import re
@@ -242,5 +231,5 @@ def construct_output(seoul_results: List[str], gyeonggi_results: List[str], matc
 def get_bus_arrival(station_name: str, route_no: str) -> str:
     matched_station_name = find_best_stop_name(station_name, list(all_stop_names), threshold=0.4)
     seoul_results = get_seoul_arrival(route_no, matched_station_name)
-    gyeonggi_results = get_gyeonggi_arrival_by_route_with_curl(route_no, matched_station_name)
+    gyeonggi_results = get_gyeonggi_arrival(route_no, matched_station_name)
     return construct_output(seoul_results, gyeonggi_results, matched_station_name, route_no, station_name)
