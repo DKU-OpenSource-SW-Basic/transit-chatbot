@@ -192,7 +192,7 @@ sequenceDiagram
 `intent_list = ['arrival_bus', 'arrival_subway', 'congestion', 'other'] # intent목록` <br>
 
 학습 데이터는 아래와 같이 구성되어있다. 이 프로젝트에서 학습 데이터는 수작업으로 제작하였음을 알린다. 
-자세한 내용은 샘플로 첨부한 100개의 문장, `data/electra_slot_tagging_data_sample.json`을 참조
+자세한 내용은 샘플로 첨부한 100개의 문장, `data/Json/electra_slot_tagging_data_sample.json`을 참조
 ```
 {
     "tokens": [
