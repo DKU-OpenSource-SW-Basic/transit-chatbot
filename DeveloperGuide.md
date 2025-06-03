@@ -9,7 +9,7 @@
 - **Python 3.8 이상 필요**
 - git
 - 공공 데이터 포털의 APIKey 
-- **사용할 API 신청 필요 https://www.data.go.kr/ 에서 신청**
+- **사용할 APIKEY 신청 필요. https://www.data.go.kr/ 에서 신청**
 
 ##  📁 파일 구조
 ``` 
@@ -28,7 +28,7 @@
 ├── setup_project.py
 ├── manage.py
 ├── README.md
-└── finetuned_model/ # github에 올라와있진 않음
+└── finetuned_model/ # github에 없음. 최초 실행시 자동 다운로드
 ```
 ## 주요 디렉토리와 파일 구성 설명:
 - data/: 버스·지하철 정류장, 노선, 역 ID 매핑용 csv/json 파일 저장 (ex: 서울/경기 버스정류소, 지하철역 정보 등)
@@ -170,22 +170,25 @@ sequenceDiagram
 ## 모델 학습 및 파인튜닝 방법
 
 ### 모델 학습 방법
-1. `koelectra_training_code.ipynb` 를 colab 또는 jupyter notebook 등 ipynb를 사용할 수 있는 환경에서 실행한다.
+1. `koelectra_training_code.ipynb` 를 [Colab](https://colab.research.google.com/) 또는 [jupyter notebook](https://jupyter.org/) 등 `ipynb`를 사용할 수 있는 환경에서 실행한다.(물론 코드만 따와서 python에서도 실행할 수 있다.)
 2. `train_epoch`, `learning_rate`, `train_batch_size` 등을 목적에 맞게 조절한다. slot과 intent를 병렬로 학습하므로, 둘 다 조절해야 한다.
 3. `# 최초 학습용 코드` 주석이 있는 곳에 학습용 데이터와 Loss 및 Accuracy 측정용 대조군 데이터를 넣는다. `train_path`와 `eval_path`에 입력한다.
 4. 코드를 실행하여 로스값과 정확도 등을 학습 과정을 주시하면서 결과를 기다린다.
 
 ### 모델 파인튜닝 방법
-1. `koelectra_training_code.ipynb` 를 colab 또는 jupyter notebook 등 ipynb를 사용할 수 있는 환경에서 실행한다. 
-2. `train_epoch`, `learning_rate`, `train_batch_size` 등 학습에 필요한 조건들을 목적에 맞게 조절한다.
+1. `koelectra_training_code.ipynb` 를 [Colab](https://colab.research.google.com/) 또는 [jupyter notebook](https://jupyter.org/) 등 `ipynb`를 사용할 수 있는 환경에서 실행한다.(물론 코드만 따와서 python에서도 실행할 수 있다.)
+2. `train_epoch`, `learning_rate`, `train_batch_size` 등 학습에 필요한 조건들을 목적에 맞게 조절한다. slot만 학습시키는 것도 가능하고, intent만 학습시키는 것도 가능하며, 둘 모두 학습시키는 것 역시 가능하다. 
 3. 마찬가지로 slot과 intent를 병렬로 학습하므로 둘 다 조절해야 하며, 파인튜닝이므로 learning_rate는 작게 하는 것을 권장한다.
 4. `파인 튜닝용 코드` 라는 텍스트 아래 있는 코드에 학습용 데이터와 Loss 및 Accuracy 측정용 대조군 데이터를 넣는다. `train_path`와 `eval_path`에 입력한다.
 5. 기존 사용하던, 파인튜닝을 실행할 모델의 주소를 입력한다. `slot_model`과 `intent_model`를 각각 조정한다.
 6. 코드를 실행하여 로스값과 정확도 등을 학습 과정을 주시하면서 결과를 기다린다.
 
-### 학습할 때 알면 좋은 것
+### 기타 및 유의사항
+- 학습용 샘플 데이터셋인 [electra_slot_tagging_data_sample.json](/data/Json/electra_slot_tagging_data_sample.json)을 첨부해두었다.
+  - 어떻게 데이터가 구성되어 있는지 확인해보고, 테스트용으로 파인튜닝을 시도해볼 수 있을 것이다.
+  - 다만, 이미 충분한 데이터로 학습이 되어있기 때문에, 새로운 문장을 파인튜닝할 경우 50에서 200정도의 작은 문장을 낮은 에폭과 학습률로 학습하는 것을 권장한다.
+- 새로운 slot이나 intent를 학습시키기 위해서는 처음부터 KoELECTRA 모델을 학습시켜야 하기 때문에, 새로운 slot, intent label을 추가할 수는 없다.
 
-  
 ### 사용해야 하는 데이터셋
 모델 학습시 필요한 라벨들은 다음과 같다. <br>
 `label_list = ['B-DIRECTION', 'B-LINE', 'B-ROUTE', 'B-STATION', 'B-TRANSPORT-BUS', 'B-TRANSPORT-SUBWAY', 'O'] # slot목록` <br>
@@ -193,7 +196,7 @@ sequenceDiagram
 
 학습 데이터는 아래와 같이 구성되어있다. 이 프로젝트에서 학습 데이터는 수작업으로 제작하였음을 알린다. 
 자세한 내용은 샘플로 첨부한 100개의 문장, `data/Json/electra_slot_tagging_data_sample.json`을 참조
-```
+```json
   {
     "tokens": [
       "22-3(신경대)",
@@ -274,8 +277,8 @@ sequenceDiagram
 - API 키 및 주요 데이터 파일은 .env나 별도 비공개 파일로 관리 필요(배포 시 보안 유의)
 - 질문의 유연성(오타, 띄어쓰기 등) 대응 위해 fuzzy matching 적극 활용
 - 모델을 학습/파인튜닝 한다면 Loss가 n연속으로 올라갈 경우 강제중단하는 `EarlyStoppingCallback` 사용을 권장한다. (과적합 방지용으로 사용)
-- - `trainer = Trainer(...)` 부분에, `callbacks=[EarlyStoppingCallback(early_stopping_patience=n)]`를 넣는다. (n은 임의의 정수)
-- - 다시 말하지만, 병렬로 학습하기 때문에, slot과 intent를 담당하는 두 부분 모두에 위 코드를 넣어야 한다.
+- - `trainer = Trainer(...)` 부분에, `callbacks=[EarlyStoppingCallback(early_stopping_patience=n)]`를 넣는다. (n은 임의의 정수. 2를 사용할 경우 2연속 loss 상승시 강제종료)
+- - 다시 말하지만, 병렬로 학습하기 때문에, slot과 intent를 담당하는 두 부분 모두에 위 코드`callbacks[...]`를 넣어야 한다.
 
 ## 참고/유의사항
 - 정류장명, 역명, 노선/호선번호 입력 시 오타/유사명/복수후보 상황은 fuzzy matching과 후보 우선순위 조정으로 극복함
@@ -285,15 +288,31 @@ sequenceDiagram
 - 실제 모델 파일(약 830MB)은 직접 배포하지 않고 Google Drive 등 외부에서 다운로드 유도. 
 - 일부 테스트/로컬환경/혹은 API 응답 디버깅 과정에서 curl -k, verify=False 옵션이 사용될 수 있으나, 이는 HTTPS 인증 무시로 보안에 취약할 수 있으므로 배포 환경에서는 사용을 금지하거나 주의해야 함
 
+## 참조 프로젝트
+**ELECTRA GitHub**: https://github.com/google-research/electra  
+**KoELECTRA GitHub**: https://github.com/monologg/KoELECTRA
+
+## 참조 데이터 파일들(csv, xlsx 등)
+- **서울시 영향권 지하철 역 이름 데이터** <br>
+https://data.seoul.go.kr/dataList/OA-15442/S/1/datasetView.do
+- **서울 버스 정거장 데이터** <br>
+https://data.seoul.go.kr/dataList/OA-15067/S/1/datasetView.do 
+- **울 버스 노선 번호 데이터** <br>
+https://data.seoul.go.kr/dataList/OA-1095/F/1/datasetView.do
+- **경기 버스 노선 데이터** <br>
+http://www.gbis.go.kr/excel/service/busInfo/metroBus/metroBusListExcel?currentPage=&rowPerPage=&cmd=searchMetroCenter&centerId=4111000000 
+- **경기도 버스 정거장 데이터** <br>
+https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=GDKWAGWYRKJYIRVX110226832213&infSeq=3
+
 ## 사용 API 안내 
-- ### 서울버스 API (공공데이터포털)
+- **서울버스 API (공공데이터포털)** <br>
 http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?serviceKey={API_KEY}&busRouteId={버스번호id}
-- ### 경기도버스 API (공공데이터포털)
+- **경기도버스 API (공공데이터포털)** <br>
 https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteStationListv2?serviceKey={APIKEY}&routeId={버스번호id}&format=json <br>
 https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalItemv2?serviceKey={APIKEY}&stationId={정거장id}&routeId={버스번호id}&format=json
-- ### 지하철 API (서울시 실시간)
+- **지하철 API (서울시 실시간)** <br>
 http://swopenapi.seoul.go.kr/api/subway/{APIKEY}/json/realtimeStationArrival/0/5/{역명}
-- ### 지하철 API (국토부 실시간)(1-2분 딜레이 존재)
+- **지하철 API (국토부 실시간)**(1-2분 딜레이 존재) <br>
 https://apis.data.go.kr/1613000/SubwayInfoService/getSubwayArrivalInfo
 
 ## 사용한 라이브러리
