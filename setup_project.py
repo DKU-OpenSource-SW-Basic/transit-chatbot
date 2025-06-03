@@ -42,7 +42,7 @@ def run_server_and_open_browser():
     print("로컬 Django 서버를 실행합니다...")
     try:
         server_process = subprocess.Popen(
-            [python_path, "manage.py", "runserver"],
+            [python_path, "manage.py", "runserver", "--settings=chatbot_project.settings"],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE
         )
 
