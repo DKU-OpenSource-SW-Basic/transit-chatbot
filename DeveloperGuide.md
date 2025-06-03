@@ -79,12 +79,12 @@ sequenceDiagram
 6. Django views.py를 통해 사용자에게 결과를 반환
 
 ### dispatcher.py
-- 역할:
+- **역할**:
   - 사용자 자연어 입력을 받아 KoELECTRA 모델로 예측
   - 예측 결과에서 슬롯/인텐트 정보 추출
   - "버스"/"지하철" 분기, 각 handler에 정제된 인자 전달
   - (에러 시) 적절한 오류 메시지 반환
-- 핵심 함수:
+- **핵심 함수**:
 - `dispatch(query: str) -> str`
   - 사용자 입력(문자열)을 받아 KoELECTRA 예측 실행 및 도착정보 핸들러 호출
     - 내부에서 `run_Koelectra.py` 실행(서브프로세스 or 모듈 호출)
@@ -92,57 +92,57 @@ sequenceDiagram
   - 정보 누락/오류 시 사용자에게 안내 메시지
 
 ### bus_handler.py
-- 역할:
+- **역할**:
   - 서울/경기권 버스 도착정보 API 통합처리(실제 서비스에서 복잡/예외 많음)
   - 입력 정류장명 fuzzy matching → ID 변환
   - 공공API 호출, 응답 파싱, 결과 문자열 생성
-- 핵심 함수:
+- **핵심 함수**:
   - `get_bus_arrival(station_name: str, route_no: str) -> str`
     - 서울/경기 전체 정류장/노선 대상 fuzzy search & 매핑
     - 서울: 노선ID+정류장ID로 서울시 open API 호출, XML 파싱, 도착예측 추출
     - 경기: 노선ID+정류장ID로 경기도 API 2단계 호출(JSON), 잔여좌석/혼잡도 등 포함 결과 생성
     - 모든 결과 중복 제거 후 최대 4건까지 요약, 사용자 입력과 실제 매칭명 모두 표기
-- 주요 구현:
+- **주요 구현**:
   - `find_best_stop_name`, `deduplicate_and_limit`, `get_seoul_arrival`, g`et_gyeonggi_arrival` 등 (모두 함수 단위 구현)
-- API 핸들 특징
+- **API 핸들 특징**
   - 서울/경기권 동시 지원: 노선ID, 정류소ID 매칭 및 fuzzy matching으로 양쪽 API 동시 접근(최대 4건 출력)
   - 정류장명 오타/유사명 robust 대응: difflib 기반 유사도 측정으로 정확하지 않은 입력도 최대한 매칭
   - 실제 서비스에선 CSV, JSON, Pandas 등 다양한 포맷 활용
   - 경기버스: curl -k subprocess 활용: requests로 직접 처리하지 않고, 인증/응답 문제 회피 위해 curl subprocess. 배포환경에선 보안 유의.
-- 개선점/부가설명 포인트
+- **개선점/부가설명**
   - curl -k subprocess → requests로 변경 권장: 보안·호환성 차원에서 requests로 리팩토링 시도 가능. 단, 경기도 API는 종종 인증 문제로 curl만 통과됨. (실전 배포 전 테스트 필요)
   - 타임아웃/재시도/Rate limit: 각 API 호출부에서 타임아웃(5초 등) 명시, 실패시 자동 재시도 로직(최대 1~2회) 추가 가능
   - 결과 deduplicate/최대 4건: 동일 차량번호(plate_no) 중복 방지, 4건만 출력(실제 서비스에서 사용자 혼란 방지)
   - 입력값 표기: 결과에는 실제 입력값+매칭된 정류장명을 모두 명시해주면, “자동수정됨”을 유저가 인지 가능
-  - 결과 통합/우선순위: 서울/경기 둘 다 있으면 우선순위는? (현재는 plate_no 기준 dedup, 4개까지)
-- 예외 및 경계상황 처리
+  - 결과 통합/우선순위: 서울/경기 둘 다 있으면 우선순위는? (현재는 plate_no 기준 dedup, 4개까지, 이후 개선할 여지가 있음)
+- **예외 및 경계상황 처리**
   - API 오류/빈값 발생시 “도착 정보를 찾을 수 없습니다.” 출력(친절한 안내)
   - 노선ID/정류장ID가 아예 없는 경우는 빠르게 종료(빈 리스트 반환)
   - Pandas로 CSV 로드 실패(경로 불일치 등) 대비 try-except 권장
 
 ### subway_handler.py
-- 역할:
+- **역할**:
   - 지하철 도착정보 API(서울시/국토부) 통합 처리
   - 입력 역명/호선명 fuzzy matching 및 ID 변환
   - 공공API 호출, 응답 파싱, 결과 정제/출력
-- 핵심 함수:
+- **핵심 함수**:
   - `get_subway_arrival(response_json: dict) -> str`
     - KoELECTRA에서 추출한 슬롯 JSON → 역명/호선 추출
     - 역명/호선 fuzzy search, ID/코드 매핑
     - 서울시 API 우선 호출, 실패시 국토부 API fallback
   - 여러 도착예측/방면/메시지 깔끔히 요약, 최대 4건 결과
-- 주요 구현:
+- **주요 구현**:
   - `find_closest_station_name`, `get_subway_arrival` (모두 함수 단위)
-- API 핸들 특징
+- **API 핸들 특징**
   - 역명/호선명 fuzzy matching: 오타/유사명 robust 대응
   - 미지원 노선(의정부경전철 등) 명시적 안내: UNSUPPORTED_LINES로 관리
   - 실제 서비스에서 다양한 예외상황에 친절한 메시지 제공
-- 개선점/부가설명 포인트
-  - requests.get verify=False 사용: SSL 인증서 경고 무시. 개발/테스트 환경에서는 임시 허용, 실제 서비스는 인증서 관리 강화 필요
-  - 타임아웃, 재시도 로직: API 응답 지연/실패에 대비한 재시도 로직, 타임아웃 지정(이미 일부 적용됨)
+- **개선점/부가설명**
+  - requests.get verify=False 사용: SSL 인증서 경고 무시. 개발/테스트 환경에서는 임시 허용, 실제 서비스는 인증서 관리 강화 필요하므로 보안 유의
+  - 타임아웃, 재시도 로직: API 응답 지연/실패에 대비한 재시도 로직, 타임아웃 지정
   - 응답구조(JSON/XML) 불일치 예외처리: 예를 들어 국토부 응답이 빈값, 리스트/단일객체 혼재 등 다양한 상황에서 try-except로 견고하게 작성
-  - 혼잡도 API는 현재 미사용: 유지보수 편의상 함수 구조만 남기고 실제 서비스에서는 off, 향후 무료API 생기면 확장 가능
-- 예외 및 경계상황 처리
+  - 혼잡도 API는 현재 미사용: 유지보수 편의상 함수 구조만 남기고 실제 서비스에서는 off, 향후 무료API 생기면 확장 가능. 모델에서 인텐트 구분이 가능하므로 API만 풀리면 충분히 사용 가능함.
+- **예외 및 경계상황 처리**
   - 역명/호선명 누락, 지원불가 노선, API 응답 실패 등 각각 명확한 메시지 안내(“서울시/국토부 API 모두 실패”, “정보 없음” 등)
   - 국토부 API fallback시에도 1~2개까지만 결과 출력(과다응답 방지)
 
@@ -158,11 +158,11 @@ sequenceDiagram
 - pip 패키지 설치 및 `download_model.py` 자동 실행(최초 환경 준비)
 
 ## Django 연동 (views.py, urls.py)
-- views.py:
+- **views.py**:
   - 채팅 화면 렌더
   - 사용자 입력 AJAX/POST 수신→`dispatcher.py` 호출→결과 반환(JSON)
   - 즐겨찾기 등 부가 기능(등록/조회) 포함 가능
-- urls.py:
+- **urls.py**:
   - `/` : 기본 채팅 페이지
   - `/ask/` 등: 질문 API 엔드포인트
   - 기타 즐겨찾기 등 필요시 추가 엔드포인트
