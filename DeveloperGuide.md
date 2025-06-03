@@ -104,6 +104,21 @@ sequenceDiagram
     - 모든 결과 중복 제거 후 최대 4건까지 요약, 사용자 입력과 실제 매칭명 모두 표기
 - 주요 구현:
   - `find_best_stop_name`, `deduplicate_and_limit`, `get_seoul_arrival`, g`et_gyeonggi_arrival` 등 (모두 함수 단위 구현)
+- API 핸들 특징
+  - 서울/경기권 동시 지원: 노선ID, 정류소ID 매칭 및 fuzzy matching으로 양쪽 API 동시 접근(최대 4건 출력)
+  - 정류장명 오타/유사명 robust 대응: difflib 기반 유사도 측정으로 정확하지 않은 입력도 최대한 매칭
+  - 실제 서비스에선 CSV, JSON, Pandas 등 다양한 포맷 활용
+  - 경기버스: curl -k subprocess 활용: requests로 직접 처리하지 않고, 인증/응답 문제 회피 위해 curl subprocess. 배포환경에선 보안 유의.
+- 개선점/부가설명 포인트
+  - curl -k subprocess → requests로 변경 권장: 보안·호환성 차원에서 requests로 리팩토링 시도 가능. 단, 경기도 API는 종종 인증 문제로 curl만 통과됨. (실전 배포 전 테스트 필요)
+  - 타임아웃/재시도/Rate limit: 각 API 호출부에서 타임아웃(5초 등) 명시, 실패시 자동 재시도 로직(최대 1~2회) 추가 가능
+  - 결과 deduplicate/최대 4건: 동일 차량번호(plate_no) 중복 방지, 4건만 출력(실제 서비스에서 사용자 혼란 방지)
+  - 입력값 표기: 결과에는 실제 입력값+매칭된 정류장명을 모두 명시해주면, “자동수정됨”을 유저가 인지 가능
+  - 결과 통합/우선순위: 서울/경기 둘 다 있으면 우선순위는? (현재는 plate_no 기준 dedup, 4개까지)
+- 예외 및 경계상황 처리
+  - API 오류/빈값 발생시 “도착 정보를 찾을 수 없습니다.” 출력(친절한 안내)
+  - 노선ID/정류장ID가 아예 없는 경우는 빠르게 종료(빈 리스트 반환)
+  - Pandas로 CSV 로드 실패(경로 불일치 등) 대비 try-except 권장
 
 ### subway_handler.py
 - 역할:
@@ -118,6 +133,18 @@ sequenceDiagram
   - 여러 도착예측/방면/메시지 깔끔히 요약, 최대 4건 결과
 - 주요 구현:
   - `find_closest_station_name`, `get_subway_arrival` (모두 함수 단위)
+- API 핸들 특징
+  - 역명/호선명 fuzzy matching: 오타/유사명 robust 대응
+  - 미지원 노선(의정부경전철 등) 명시적 안내: UNSUPPORTED_LINES로 관리
+  - 실제 서비스에서 다양한 예외상황에 친절한 메시지 제공
+- 개선점/부가설명 포인트
+  - requests.get verify=False 사용: SSL 인증서 경고 무시. 개발/테스트 환경에서는 임시 허용, 실제 서비스는 인증서 관리 강화 필요
+  - 타임아웃, 재시도 로직: API 응답 지연/실패에 대비한 재시도 로직, 타임아웃 지정(이미 일부 적용됨)
+  - 응답구조(JSON/XML) 불일치 예외처리: 예를 들어 국토부 응답이 빈값, 리스트/단일객체 혼재 등 다양한 상황에서 try-except로 견고하게 작성
+  - 혼잡도 API는 현재 미사용: 유지보수 편의상 함수 구조만 남기고 실제 서비스에서는 off, 향후 무료API 생기면 확장 가능
+- 예외 및 경계상황 처리
+  - 역명/호선명 누락, 지원불가 노선, API 응답 실패 등 각각 명확한 메시지 안내(“서울시/국토부 API 모두 실패”, “정보 없음” 등)
+  - 국토부 API fallback시에도 1~2개까지만 결과 출력(과다응답 방지)
 
 ## 모델 및 실행 스크립트
 ### download_model.py
@@ -197,16 +224,17 @@ sequenceDiagram
 - 모든 데이터 변환/검색/매핑/출력 등은 bus_handler.py, subway_handler.py 등 함수 위주로 구조가 바뀌었으니, 클래스 중심의 설명 대신 함수 기반 흐름과 데이터 매칭 과정을 중심으로 참고하세요.
 - API 키 및 주요 데이터 파일은 .env나 별도 비공개 파일로 관리 필요(배포 시 보안 유의)
 - 질문의 유연성(오타, 띄어쓰기 등) 대응 위해 fuzzy matching 적극 활용
-- 모델을 학습/파인튜닝 한다면 Loss가 n연속으로 올라갈 경우 강제중단하는 `EarlyStoppingCallback` 사용을 권장한다. (과적합 방지용으로 사용한다.)
-- - `trainer = Trainer(...)` 부분에, `callbacks=[EarlyStoppingCallback(early_stopping_patience=n)]`를 넣는다.(n은 임의의 정수를 넣자)
+- 모델을 학습/파인튜닝 한다면 Loss가 n연속으로 올라갈 경우 강제중단하는 `EarlyStoppingCallback` 사용을 권장한다. (과적합 방지용으로 사용)
+- - `trainer = Trainer(...)` 부분에, `callbacks=[EarlyStoppingCallback(early_stopping_patience=n)]`를 넣는다. (n은 임의의 정수)
 - - 다시 말하지만, 병렬로 학습하기 때문에, slot과 intent를 담당하는 두 부분 모두에 위 코드를 넣어야 한다.
 
 ## 참고/유의사항
 - 정류장명, 역명, 노선/호선번호 입력 시 오타/유사명/복수후보 상황은 fuzzy matching과 후보 우선순위 조정으로 극복함
 - 공공데이터 API 특성상 응답이 늦거나 간헐적 오류(특히 경기권) 발생 가능, 예외 메시지 처리 필수
+- 의정부경전철 같은 비주류 열차/지하철의 경우 API응답 대상에서 제외되어 있음. 추후 추가할 여지가 있음
 - 모델(koelectra) 다운로드 및 환경설정 자동화: setup_project.py로 최초 1회 실행
 - 실제 모델 파일(약 830MB)은 직접 배포하지 않고 Google Drive 등 외부에서 다운로드 유도. 
-- 일부 테스트/로컬환경/혹은 API 응답 디버깅 과정에서 curl -k 옵션이 사용될 수 있으나, 이는 HTTPS 인증 무시로 보안에 취약할 수 있으므로 배포 환경에서는 사용을 금지하거나 주의해야 함
+- 일부 테스트/로컬환경/혹은 API 응답 디버깅 과정에서 curl -k, verify=False 옵션이 사용될 수 있으나, 이는 HTTPS 인증 무시로 보안에 취약할 수 있으므로 배포 환경에서는 사용을 금지하거나 주의해야 함
 
 ## 사용 API 안내 
 - ### 서울버스 API (공공데이터포털)
