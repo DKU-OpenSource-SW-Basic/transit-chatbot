@@ -2,7 +2,7 @@
 
 ## 🛠️ 다운로드 방법
 
-
+**방법 1**
 ``` bash
 # 1. 깃허브에서 프로젝트를 복제(clone)합니다.
 git clone https://github.com/DKU-OpenSource-SW-Basic/transit-chatbot.git
@@ -23,6 +23,14 @@ where manage.py
 python manage.py runserver --settings=chatbot_project.settings
 명령어를 입력하시면 해결될 수 있습니다.
 ```
+
+**방법 2**
+
+>1. `Download ZIP`을 활용하여 직접 전체 코드를 다운로드합니다.
+>2. 원하는 경로에 압축을 풀고, `setup_project.py`을 실행합니다.
+>3. 만약, 제대로 웹페이지가 나오지 않는다면, `setup_project.py`를 강제종료 혹은 직접 종료하고 다시 실행하고 기다립니다.
+>4. 열려있는 py창을 닫을경우 강제로 웹페이지와의 연결이 끊깁니다. 
+
 
 ## 📖 사용 방법
 - 웹페이지의 기본 화면이다
