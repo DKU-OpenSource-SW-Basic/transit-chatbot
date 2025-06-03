@@ -192,6 +192,7 @@ sequenceDiagram
 `intent_list = ['arrival_bus', 'arrival_subway', 'congestion', 'other'] # intent목록` <br>
 
 학습 데이터는 아래와 같이 구성되어있다. 이 프로젝트에서 학습 데이터는 수작업으로 제작하였음을 알린다. 
+자세한 내용은 샘플로 첨부한 100개의 문장, `data/electra_slot_tagging_data_sample.json`을 참조
 ```
 {
     "tokens": [
@@ -217,6 +218,54 @@ sequenceDiagram
       "O"
     ],
     "intent": "arrival_bus"
+  },
+{
+    "tokens": [
+      "경의선",
+      "열차",
+      "농협은행.시장입구앞(마을)방향",
+      "이라는데,",
+      "까치산",
+      "역",
+      "언제",
+      "도착합니까?"
+    ],
+    "tags": [
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-DIRECTION",
+      "O",
+      "B-STATION",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "arrival_subway"
+  }
+{
+    "tokens": [
+      "06호선",
+      "지하철",
+      "이태원",
+      "역",
+      "에서",
+      "타면",
+      "혼잡도",
+      "엄청",
+      "높을까?"
+    ],
+    "tags": [
+      "B-LINE",
+      "B-TRANSPORT-SUBWAY",
+      "B-STATION",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "intent": "congestion"
   }
 ```
 
