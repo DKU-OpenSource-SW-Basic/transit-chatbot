@@ -2,30 +2,27 @@
 
 ## 준비물
 - **Python 3.8 이상 필요**
+- - **pip (최신 권장, Python 설치 시 기본 포함, 3.8 버전인 경우 유의)**
 - git (방법 1 사용시 필요함)
 
 ## 🛠️ 다운로드 방법
 
 **방법 1**
-``` bash
-# 1. 깃허브에서 프로젝트를 복제(clone)합니다.
+1. **깃허브에서 프로젝트를 복제(clone)합니다.**
+``` terminal
 git clone https://github.com/DKU-OpenSource-SW-Basic/transit-chatbot.git
-
-# 2. 생성된 프로젝트 폴더로 이동합니다.
+```
+2. **생성된 프로젝트 폴더로 이동합니다.**
+``` terminal
 cd transit-chatbot
-
-# 3. (최초 1회) 모든 환경 준비 및 실행을 자동으로 처리합니다.
+```
+3. **(최초 1회) 모든 환경 준비 및 실행을 자동으로 처리합니다.**
+``` terminal
 python setup_project.py
 ```
+4. **이후 다시 실행하고 싶을 때에는 아래 코드를 입력하세요.**
 ``` terminal
 python manage.py runserver
-```
-``` bash
-만약 python manage.py runserver 명령어로 실행했는데 404가 뜬다면,
-where manage.py
-코드를 실행하여 경로를 확인하고, transit-chatbot 폴더가 아닌 경로로 지정되어 있거나 비어있다면
-python manage.py runserver --settings=chatbot_project.settings
-명령어를 입력하시면 해결될 수 있습니다.
 ```
 
 **방법 2**
@@ -34,6 +31,47 @@ python manage.py runserver --settings=chatbot_project.settings
 2. 원하는 경로에 압축을 풀고, `setup_project.py`을 실행합니다.
 3. 만약, 제대로 웹페이지가 나오지 않는다면, `setup_project.py`를 강제종료 혹은 직접 종료하고 다시 실행하고 기다립니다.
 4. **<주의>** 열려있는 py창을 닫을경우, **강제로 웹페이지와의 연결이 끊깁니다.** 
+
+### 만약 404 error가 뜰 경우
+**가상환경**(**venv**)를 사용하시면 됩니다.  
+**<주의>: venv를 사용할 경우, 여분의 저장공간(약 700MB~1GB)이 요구됩니다.**  
+
+0. **CDM 창**을 실행한 뒤, **패키지가 있는 경로**로 이동하기.
+  - cmd창은 window+R 명령어로 검색창을 연 뒤에 cmd를 입력하여 갈 수 있습니다. 
+  만약 프로젝트 다운로드 경로가 `C:\Users\user\transit-chatbot`이라면 아래처럼 입력.
+  ```terminal
+  cd C:\Users\user\transit-chatbot
+  ```
+1. **가상환경 만들기**  
+  ```terminal
+  python -m venv venv
+  ```
+2. **가상환경 활성화**
+    - windows:
+    ```bash
+    .\venv\Scripts\activate
+    ```
+    - macOS/Linux:
+    ```bash
+    source venv/bin/activate
+    ```
+3. **가상환경에서 다시 `setup_project.py` 실행**
+   ```terminal
+   python setup_project.py
+   ```
+
+### 다운로드시 추가안내
+- 위 방법을 모두 시도하고도 문제가 발생한다면 에러 메시지를 복사해서 [이슈]로 남겨주세요.
+- **pip** 버젼이 낮으면 제대로 실행이 안될 수 있습니다.
+  ```bash
+  python --version
+  pip --version
+  ```
+  위 코드를 입력하여 버전을 확인하시고, Python은 3.8 이상, pip은 21.x 이상을 권장합니다.
+  만약 pip 버전이 낮아 오류가 발생한다면 아래 명령어로 업그레이드해 주세요.
+  ```bash
+  python -m pip install --upgrade pip
+  ```
 
 
 ## 📖 사용 방법
