@@ -1,7 +1,7 @@
 # 🚀 User Guide
 
 ## 준비물
-- **Python 3.8 이상 필요**
+- **Python 3.8 이상 필요, 3.10 이상 권장**
   - **pip (최신 권장, Python 설치 시 기본 포함, 3.8 버전인 경우 유의)**
 - git (방법 1 사용시 필요함)
 
@@ -17,6 +17,7 @@ git clone https://github.com/DKU-OpenSource-SW-Basic/transit-chatbot.git
 cd transit-chatbot
 ```
 3. **(최초 1회) 모든 환경 준비 및 실행을 자동으로 처리합니다.**
+   - ***<주의>** 실행 후 cmd창을 닫지 말아주세요!* 자동으로 닫혔을 경우 4번으로 이어가주세요.
 ``` terminal
 python setup_project.py
 ```
@@ -36,7 +37,7 @@ python manage.py runserver
 **가상환경**(**venv**)를 사용하시면 됩니다.  
 **<주의>: venv를 사용할 경우, 여분의 저장공간(약 700MB~1GB)이 요구됩니다.**  
 
-0. **CDM 창**을 실행한 뒤, **패키지가 있는 경로**로 이동하기.
+0. **CMD 창**을 실행한 뒤, **패키지가 있는 경로**로 이동하기.
   - cmd창은 window+R 명령어로 검색창을 연 뒤에 cmd를 입력하여 갈 수 있습니다. 
   만약 프로젝트 다운로드 경로가 `C:\Users\user\transit-chatbot`이라면 아래처럼 입력.
   ```terminal
