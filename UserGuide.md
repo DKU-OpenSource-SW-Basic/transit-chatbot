@@ -4,6 +4,7 @@
 - **Python 3.8 이상 필요, 3.10 이상 권장**
   - **pip (최신 권장, Python 설치 시 기본 포함, 3.8 버전인 경우 유의)**
 - git (방법 1 사용시 필요함)
+- **(중요!!!)개인 APIKEY 발급받아 사용하기**
 
 ## 🛠️ 다운로드 방법
 
@@ -62,6 +63,7 @@ python manage.py runserver
    ```
 
 ### 다운로드시 추가안내
+- 사용 전, APIKEY를 발급받았는지 반드시 확인해주세요.
 - 위 방법을 모두 시도하고도 문제가 발생한다면 에러 메시지를 복사해서 [이슈]로 남겨주세요.
 - **pip** 버젼이 낮으면 제대로 실행이 안될 수 있습니다.
   ```bash
@@ -74,6 +76,23 @@ python manage.py runserver
   python -m pip install --upgrade pip
   ```
 
+## APIKEY 발급 및 사용 안내
+1. 개발자 가이드의 마지막 부분, [사용 API](DeveloperGuide.md#사용-api-안내) 부분을 참고하여, 해당 사이트에 가서 직접 APIKEY를 발급받습니다.
+2. 발급받아야 하는 KEY는 공공데이터포털, 서울시 지하철, 서울시 버스 API입니다.
+3. chatbot/ 폴더어 가서, `KEY.env` 파일을 txt파일로 변환 후, 각 알맞는 key 변수를 입력합니다.
+4. 제대로 작동하면 완성입니다!
+5. 잘 이해가 안되시면 아래를 참조하세요.
+```env
+DATAGOKR_API_KEY = sampleKEY1
+SEOUL_SERVICE_KEY = sampleKEY2
+SEOUL_API_KEY = sampleKEY3
+```
+부분을 직접 인증받은 key값으로, 아래처럼 수정하세요.
+```env
+DATAGOKR_API_KEY = cLn----------------------------------------------%3D
+SEOUL_SERVICE_KEY = 1sq/------------------------------------------0jg==
+SEOUL_API_KEY = 5a-------------------------------------ca
+```
 
 ## 📖 사용 방법
 - 웹페이지의 기본 화면이다
