@@ -9,10 +9,12 @@ import urllib.parse
 import pandas as pd
 import subprocess
 import shlex
+import os
 
 # API KEY
-SEOUL_SERVICE_KEY    = "1sq/rwVIQUlj/pGMERuN6nx+n6RE4Ioxf5ymfzg2LZgyne97Ex0Bmm4xBJ8jPFPHfFBhAOuXc///yNimFMb0jg=="
-GYEONGGI_SERVICE_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XNmPgYxBuWKLBYdQIkcKOHmobGMlEdDw%3D%3D"
+# 기존 key는 보안상의 이유로 폐기되었습니다. 다시 찾아오셔도 사용이 불가능합니다. key는 직접 발급 받아야합니다. KEY.env 파일에서 설정해주세요.
+SEOUL_SERVICE_KEY    = os.enciron.get("SEOUL_SERVICE_KEY") # 서울시 버스 API KEY
+GYEONGGI_SERVICE_KEY = os.enciron.get("DATAGOKR_API_KEY ") # 공공데이터포털KEY
 
 # 경로 설정
 BASE_DIR = Path(__file__).resolve().parent.parent

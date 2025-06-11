@@ -5,8 +5,9 @@ import difflib
 from pathlib import Path
 
 # API 키
-TAGO_API_KEY = "cLnyMQHDF8fbs1XyKC1w2N6zZKMFCEFsvyiGh5IQYuEyMeU8JQ3Hf8XNmPgYxBuWKLBYdQIkcKOHmobGMlEdDw%3D%3D"
-SEOUL_API_KEY = "5a506c476b73696d39376845756c6a"
+# 기존 key는 보안상의 이유로 폐기되었습니다. 다시 찾아오셔도 사용이 불가능합니다. key는 직접 발급 받아야합니다. KEY.env 파일에서 설정해주세요.
+TAGO_API_KEY    = os.enciron.get("DATAGOKR_API_KEY") # 공공데이터포털KEY
+SEOUL_API_KEY = os.enciron.get("SEOUL_API_KEY") # 서울시 지하철 API KEY
 
 SEOUL_LINES = {"1호선", "2호선", "3호선", "4호선", "5호선", "6호선", "7호선", "8호선", "9호선", "경의중앙선", "수인분당선", "신분당선", "경춘선", "경강선", "우이신설선", "서해선", "신림선", "공항철도", "GTX-A"}
 UNSUPPORTED_LINES = {"인천1호선", "인천2호선", "김포골드라인", "용인경전철", "의정부경전철"}
